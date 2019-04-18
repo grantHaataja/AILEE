@@ -13,138 +13,138 @@ from MainMenuException import MainMenuException
 DEFAULT_PROMPT = colored("AILEE@{COMP}: {CWD}$ ", 'green')
 
 CMD_NOT_FOUND_STRS = [
-  "command not found"
+    "command not found"
 ]
 
 class Shell(object):
-  """
-  Like a seashell.
-  """
-
-  def __init__(self, computer, user, agent=None, cwd=None, game=None):
     """
-    Create a shell.
+    Like a seashell.
     """
 
-    self.computer = computer
-    self.user = user
-    self.agent = agent
-    self.cwd = cwd or computer.fs
-    self.prompt = DEFAULT_PROMPT
-    self.running = False
-    self._command_dictionary = {}
-    self.variables = {}
-    self.game = game
-    self.history = []
+    def __init__(self, computer, user, agent=None, cwd=None, game=None):
+        """
+        Create a shell.
+        """
 
-    self._setup()
+        self.computer = computer
+        self.user = user
+        self.agent = agent
+        self.cwd = cwd or computer.fs
+        self.prompt = DEFAULT_PROMPT
+        self.running = False
+        self._command_dictionary = {}
+        self.variables = {}
+        self.game = game
+        self.history = []
 
-  def _setup(self):
-    funfunctions.clear()
-    s = "Loading new shell"
+        self._setup()
 
-    print(s, end='\r')
-    i = 0
+    def _setup(self):
+        funfunctions.clear()
+        s = "Loading new shell"
 
-    # load command dictionary
-    for module in executables.__all__:
-      self._command_dictionary.update({module: getattr(executables, module).run})
-      print(s + '.'*i, end='\r')
-      i += 1
-      time.sleep(0.1)
-    time.sleep(0.3)
-    funfunctions.clear()
-    #print(constants.title)
+        print(s, end='\r')
+        i = 0
 
-  def _get_command_from_str(self, command_str):
-    """
-    Takes a command name, returns the executable object.
-    """
+        # load command dictionary
+        for module in executables.__all__:
+            self._command_dictionary.update({module: getattr(executables, module).run})
+            print(s + '.'*i, end='\r')
+            i += 1
+            time.sleep(0.1)
+        time.sleep(0.3)
+        funfunctions.clear()
+        #print(constants.title)
 
-    if command_str == '':
-      return False
-    if command_str not in self.game.allowed_commands:
-      return None
-    cmd = self._command_dictionary[command_str]
-    return cmd
+    def _get_command_from_str(self, command_str):
+        """
+        Takes a command name, returns the executable object.
+        """
 
-  def run_command(self, command, args):
-    """
-    Runs a command.
+        if command_str == '':
+            return False
+        if command_str not in self.game.allowed_commands:
+            return None
+        cmd = self._command_dictionary[command_str]
+        return cmd
 
-    Input must be a runnable command that accepts **kwargs.
-    """
+    def run_command(self, command, args):
+        """
+        Runs a command.
 
-    command(
-      *args,
-      computer=self.computer,
-      cwd=self.cwd,
-      user=self.user,
-      agent=self.agent,
-      shell=self,
-      game=self.game,
-    )
+        Input must be a runnable command that accepts **kwargs.
+        """
 
-  def take_input(self):
-    user_input = input(self.prompt.format(
-      COMP=str(self.computer.name),
-      CWD=str(self.cwd),
-      USER=self.user),
-    )
+        command(
+            *args,
+            computer=self.computer,
+            cwd=self.cwd,
+            user=self.user,
+            agent=self.agent,
+            shell=self,
+            game=self.game,
+        )
 
-    parts = [p.strip() for p in user_input.split(' ')]
-    command = parts[0]
-    args = parts[1:]
+    def take_input(self):
+        user_input = input(self.prompt.format(
+            COMP=str(self.computer.name),
+            CWD=str(self.cwd),
+            USER=self.user),
+        )
 
-    return command, args
+        parts = [p.strip() for p in user_input.split(' ')]
+        command = parts[0]
+        args = parts[1:]
 
-  def one_command(self):
-    command, args = self.take_input()
-    cmd = self._get_command_from_str(command)
-    if cmd is None:
-      self.cmd_not_found()
-      return
-    elif cmd is False:
-      return  # nothing on empty commands
-    cname = cmd.__module__.split('.')[-1]
-    if not cname == 'doStory':
-      self.game.history.append([cname, args])
-      self.history.append([cname, args])
+        return command, args
 
-    if not (command or args):
-      return  # skip empty input
-    self.run_command(cmd, args)
+    def one_command(self):
+        command, args = self.take_input()
+        cmd = self._get_command_from_str(command)
+        if cmd is None:
+            self.cmd_not_found()
+            return
+        elif cmd is False:
+            return  # nothing on empty commands
+        cname = cmd.__module__.split('.')[-1]
+        if not cname == 'doStory':
+            self.game.history.append([cname, args])
+            self.history.append([cname, args])
 
-  def halt(self):
-    self.running = False
+        if not (command or args):
+            return  # skip empty input
+        self.run_command(cmd, args)
 
-  def cmd_not_found(self):
-    self.history.append([None, []])
-    self.game.history.append([None, []])
-    print("Command not found")
-    #print(random.choice(CMD_NOT_FOUND_STRS))
+    def halt(self):
+        self.running = False
 
-  def start_shell_loop(self):
-    self.running = True
-    while self.running:
+    def cmd_not_found(self):
+        self.history.append([None, []])
+        self.game.history.append([None, []])
+        print("Command not found")
+        #print(random.choice(CMD_NOT_FOUND_STRS))
 
-      # This is the line of code that integrates the story VVV
+    def start_shell_loop(self):
+        self.running = True
+        while self.running:
+
+            # This is the line of code that integrates the story VVV
 
 
-      try:
-        self.run_command(events.doStory.run, [])
-        self.one_command()
-      except KeyboardInterrupt:
-        print()
-        #print("\nYou can't leave! ", end='')
-      except KeyError as e:
-        self.cmd_not_found()
-      except AssertionError as e:
-        print(str(e))
-      except MainMenuException:
-        raise MainMenuException
-      except Exception as e:
-        print(colored("Something went wrong.  I'm not quite sure what.  Maybe try again?", 'red'))
-        # Uncomment VV for full tracebacks
-        #einfo = sys.exc_info()
-        #traceback.print_exception(*einfo)
+            try:
+                self.run_command(events.doStory.run, [])
+                self.one_command()
+            except KeyboardInterrupt:
+                print()
+                #print("\nYou can't leave! ", end='')
+            except KeyError as e:
+                self.cmd_not_found()
+            except AssertionError as e:
+                print(str(e))
+            except MainMenuException:
+                raise MainMenuException
+            except Exception as e:
+                print(colored("Something went wrong.  I'm not quite sure what.  Maybe try again?", 'red'))
+                # Uncomment VV for full tracebacks
+                #einfo = sys.exc_info()
+                #traceback.print_exception(*einfo)

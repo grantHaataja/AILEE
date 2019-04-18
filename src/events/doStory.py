@@ -15,18 +15,18 @@ EVENTS = [e for e in events.__all__ if e.startswith('event')]
 EVENTS.sort()
 
 def run(*args, **kwargs):
-  # TODO: get that events list VVV
-  #print("Beginning event checking")
-  game = kwargs['game']
-  for event in EVENTS:
-    event = getattr(events, event)
-    eventready = event.check_run(*args, **kwargs)
-    ename = event.__name__.split('.')[-1]
-    nodup = ename not in game.events_run
-    #print("Checking conditions for {}: {}, {}".format(
-    #  ename, eventready, nodup
-    #))
-    if eventready and nodup:
-      game.events_run.append(event.__name__.split('.')[-1])
-      event.run(*args, **kwargs)
-      return  # prevent multiple runs with same command
+    # TODO: get that events list VVV
+    #print("Beginning event checking")
+    game = kwargs['game']
+    for event in EVENTS:
+        event = getattr(events, event)
+        eventready = event.check_run(*args, **kwargs)
+        ename = event.__name__.split('.')[-1]
+        nodup = ename not in game.events_run
+        #print("Checking conditions for {}: {}, {}".format(
+        #  ename, eventready, nodup
+        #))
+        if eventready and nodup:
+            game.events_run.append(event.__name__.split('.')[-1])
+            event.run(*args, **kwargs)
+            return  # prevent multiple runs with same command

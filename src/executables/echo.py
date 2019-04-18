@@ -8,7 +8,7 @@ Usage: echo [text]
 '''
 
 def run(*args, **kwargs):
-  """
-  Return whatever was put in.
-  """
-  print(' '.join([str(s) for s in args]))
+    """
+    Return whatever was put in.
+    """
+    print(' '.join([str(s) for s in args]))

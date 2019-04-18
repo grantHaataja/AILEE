@@ -3,4 +3,4 @@ Custom Exception to allow the shutdown command to return to the main menu instea
 '''
 
 class MainMenuException(Exception):
-  pass
+    pass

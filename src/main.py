@@ -33,38 +33,38 @@ import time
 
 
 def main():
-  while True:
-    # Create the game, agent, computer; and get a shell
-    game = Game()
-    if game.leave:
-      break
-    ailee = game.spawn_agent("Ailee")
-    comp = game.add_computer('127.0.0.1', 'localhost')
-    game.eventLogDir = comp.fs.mkdir('chat_log')
-    pDir = comp.fs.mkdir('go_here_first')
-    pDir.addFile('readme.txt', 'The "run" command runs .exe files.\n\nYou can use the command "cd .." to move up a directory')
-    pDir.addFile('executable.exe', """
+    while True:
+        # Create the game, agent, computer; and get a shell
+        game = Game()
+        if game.leave:
+            break
+        ailee = game.spawn_agent("Ailee")
+        comp = game.add_computer('127.0.0.1', 'localhost')
+        game.eventLogDir = comp.fs.mkdir('chat_log')
+        pDir = comp.fs.mkdir('go_here_first')
+        pDir.addFile('readme.txt', 'The "run" command runs .exe files.\n\nYou can use the command "cd .." to move up a directory')
+        pDir.addFile('executable.exe', """
     Error: Unreadable file
     """)
-    pDir.addFile('.hiddenFile.txt', 'I am a hidden file, good job finding me!')
-    prev = comp.fs
-    for i in range(1, 11):
-      prev = prev.mkdir("folder{}".format(i))
-    prev.addFile('file.txt', 'belt')
-    prev.addFile('.sign.txt', 'Mario was here')
-    comp.add_user('Administrator')
-    if not game.skip_dialog:
-      clear()
-      funfunctions.login(comp.get_user('Administrator').name, comp.get_user('Administrator').password)
-      clear()
-      funfunctions.startAilee()
-    ailee.login(comp)
-    try:
-      ailee.shells[0].start_shell_loop()
-      print("Just broke out of main loop")
-      time.sleep(10)
-    except MainMenuException:
-      pass # So the shutdown command returns to the main menu instead of exiting
+        pDir.addFile('.hiddenFile.txt', 'I am a hidden file, good job finding me!')
+        prev = comp.fs
+        for i in range(1, 11):
+            prev = prev.mkdir("folder{}".format(i))
+        prev.addFile('file.txt', 'belt')
+        prev.addFile('.sign.txt', 'Mario was here')
+        comp.add_user('Administrator')
+        if not game.skip_dialog:
+            clear()
+            funfunctions.login(comp.get_user('Administrator').name, comp.get_user('Administrator').password)
+            clear()
+            funfunctions.startAilee()
+        ailee.login(comp)
+        try:
+            ailee.shells[0].start_shell_loop()
+            print("Just broke out of main loop")
+            time.sleep(10)
+        except MainMenuException:
+            pass # So the shutdown command returns to the main menu instead of exiting
 
 if __name__ == '__main__':
-  main()
+    main()

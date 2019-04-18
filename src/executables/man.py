@@ -51,24 +51,24 @@ VITRUVIAN = """
 """
 
 def run(*args, **kwargs):
-  """
-  Lookup man pages for a command.
-  """
-  emptyList = True
-  for arg in args:
-    if arg:
-      emptyList = False
-  assert len(args) in [0, 1] or emptyList, "Invalid use of man.\n\nUsage: man [command]"
+    """
+    Lookup man pages for a command.
+    """
+    emptyList = True
+    for arg in args:
+        if arg:
+            emptyList = False
+    assert len(args) in [0, 1] or emptyList, "Invalid use of man.\n\nUsage: man [command]"
 
-  if len(args) == 0 or emptyList:
-    print(VITRUVIAN)
-    return
-  
-  if (args[0] in kwargs['game'].allowed_commands) and \
-     (args[0] not in executables.BLACKLIST_COMMANDS):
-    try:
-      print(getattr(executables, args[0]).__doc__)
-    except AttributeError:
-      print("no command {} found".format(args[0]))
-  else:
-    print("command not found")
+    if len(args) == 0 or emptyList:
+        print(VITRUVIAN)
+        return
+
+    if (args[0] in kwargs['game'].allowed_commands) and \
+            (args[0] not in executables.BLACKLIST_COMMANDS):
+        try:
+            print(getattr(executables, args[0]).__doc__)
+        except AttributeError:
+            print("no command {} found".format(args[0]))
+    else:
+        print("command not found")

@@ -1,12 +1,13 @@
-'''
+"""
 "Clear your screen you dirty animal"
 
 Description: clears all text from the terminal screen
 
 Usage: clear
-'''
+"""
 
 import funfunctions
+
 
 def run(*args, **kwargs):
     emptyList = True

@@ -1,19 +1,21 @@
-'''
+"""
 "Run, run, as fast as you can. You can't catch me, I'm the gingerbread man!"
 
 Description: Runs an executable file
 
 Usage: run file_name.exe
-'''
+"""
 
 from termcolor import colored
+
 
 def forkbomb():
     pass
 
-def run(*args, **kwargs):
-    assert len(args) == 1, "Must specify an executable to run.\n\nUsage: run [executable]"
 
+def run(*args, **kwargs):
+    assert len(args) == 1, \
+        "Must specify an executable to run.\n\nUsage: run [executable]"
 
     if args[0].split('.')[-1] != 'exe':
         print("Unable to run file, must be .exe")

@@ -1,14 +1,16 @@
-'''
+"""
 "Spell ICUP"
 
 Description: Port Scan. Use against an IP address to detect what ports are open and can be\nconnected to
 
 Usage: pscan xxx.xxx.xxx.xxx
-'''
+"""
+
 
 def run(*args, **kwargs):
 
-    assert len(args) == 1, "You must specify a valid IP address.\n\nUsage: pscan [ip_address]"
+    assert len(args) == 1, \
+        "You must specify a valid IP address.\n\nUsage: pscan [ip_address]"
 
     print('Scanning {}...'.format(args[0]))
 

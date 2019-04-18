@@ -1,4 +1,4 @@
-'''
+"""
 "Love Story"
 
 Description: Lists the current directory's contents, which can be files or other\ndirectories (keep in mind the current directory may be empty)
@@ -10,11 +10,12 @@ Option -la (long list all): Lists the current directory's contents in long list\
 Usage: ls
 
 Usage: ls -la (for long list format)
-'''
+"""
 
 from termcolor import colored
 
 # use """list(kwargs['cwd'])""" to get the current working directory's contents
+
 
 def run(*args, **kwargs):
     listAll = False
@@ -32,6 +33,7 @@ def run(*args, **kwargs):
         listDir(list(kwargs['cwd']), listAll, listMode)
     else:
         print('Invalid use of ls. See manual page for details')
+
 
 def listDir(contents, listAll, listMode):
     if not listAll:

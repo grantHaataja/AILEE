@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-'''
+"""
 "Lookup the user guide (manual) for a command or cause the computer to mansplain economics"
 
 Description: Shows the manual page for any command to describe its usage
@@ -7,7 +7,7 @@ Description: Shows the manual page for any command to describe its usage
 Usage: man command_name
 
 Usage: man (for all you manly men out there)
-'''
+"""
 
 import executables
 
@@ -50,6 +50,7 @@ VITRUVIAN = """
         "^^^^^^^^^^^^^^^^^^^^^^^ ╙╙▀╨╙╨╙╜*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 """
 
+
 def run(*args, **kwargs):
     """
     Lookup man pages for a command.
@@ -58,7 +59,8 @@ def run(*args, **kwargs):
     for arg in args:
         if arg:
             emptyList = False
-    assert len(args) in [0, 1] or emptyList, "Invalid use of man.\n\nUsage: man [command]"
+    assert len(args) in [0, 1] or emptyList, \
+        "Invalid use of man.\n\nUsage: man [command]"
 
     if len(args) == 0 or emptyList:
         print(VITRUVIAN)

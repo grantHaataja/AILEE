@@ -1,4 +1,4 @@
-'''
+"""
 "Sally sells these by the seashore"
 
 Description: Basically, a shell is the running process behind a terminal window.\nYou are reading this on a shell right now. This command shows what shells are\nopen on which computers and allows the user to switch between them
@@ -6,7 +6,8 @@ Description: Basically, a shell is the running process behind a terminal window.
 Usage: shell (shows all open shells and which computer they belong to)
 
 Usage: shell x (switches to shell number x to access the computer shell number x\nis open on)
-'''
+"""
+
 
 def run(*args, **kwargs):
     emptyList = True
@@ -15,7 +16,6 @@ def run(*args, **kwargs):
             emptyList = False
 
     agent = kwargs['agent']
-    #print(kwargs)
     shells = agent.shells
 
     if not args or emptyList:

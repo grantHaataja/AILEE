@@ -1,14 +1,15 @@
 # -*- coding: utf-8 -*-
-'''
+"""
 "Determine if another computer wants to play pingpong"
 
 Description: Tells if a computer is connected to the internet
 
 Usage: ping xxx.xxx.xxx.xxx
-'''
+"""
 
 import random
 import time
+
 
 def run(*args, **kwargs):
     """
@@ -32,6 +33,7 @@ def success(addr):
         print("64 bytes from {}: icmp_seq={} ttl=64 time={:1.3f} ms".format(
             addr, i, t
         ))
+
 
 def fail(addr):
     for i in range(8):

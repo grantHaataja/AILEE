@@ -1,10 +1,11 @@
-'''
+"""
 "Better than looking at cat pics"
 
 Description: Prints contents of a file to the terminal screen
 
 Usage: read file_name.txt
-'''
+"""
+
 
 def run(*args, **kwargs):
     assert len(args) == 1, "Must specify a file to read.\n\nUsage: read [filename]"

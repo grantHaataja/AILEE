@@ -1,0 +1,31 @@
+# From filesystem
+
+class Executable (File):
+  '''
+    Magic files that do special things when told to
+  '''
+  def __init__(self, name, executable, data='', permissions='rwxrwx', owner=None):
+    super().__init__(name, data, permissions, owner)
+    self.execute = executable
+    
+  def __repr__(self):
+    # make it green in ls
+    return colored(self.name, 'green')
+  
+  def __str__(self):
+    return self.name
+
+# From executables.mkdir
+
+'''
+Creates a directory
+'''
+
+def run(*args, **kwargs):
+  if len(args) == 1:
+    try:
+      kwargs['cwd'].mkdir(args[0])
+    except AssertionError:
+      print('Directory already exists')
+  else:
+    print('Invalid arguments')

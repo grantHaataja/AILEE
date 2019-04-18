@@ -16,6 +16,7 @@ def clear():
     cls = lambda: os.system('clear')
   elif platform.system() == 'Windows':
     cls = lambda: os.system('cls')
+  cls()
 
 def typewriter(text, speed='FAST'):
   '''

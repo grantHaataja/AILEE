@@ -1,14 +1,16 @@
-#Second special dialogue of the game
-#triggers after Ailee reads .notes.txt
+# Second special dialogue of the game
+# triggers after Ailee reads .notes.txt
+
 import time
 from funfunctions import typewriter
 from termcolor import colored
+
 
 def check_run(*args, **kwargs):
     # check for 'read .notes.txt' in history
     if len(kwargs['game'].history) == 0:
         return False
-    if not 'event5a' in kwargs['game'].events_run:
+    if 'event5a' not in kwargs['game'].events_run:
         return False
 
     command = ['read', ['.notes.txt']]
@@ -16,6 +18,7 @@ def check_run(*args, **kwargs):
     a = kwargs['game'].history[-1] == command
     b = '.notes.txt' in kwargs['cwd'].children
     return a and b
+
 
 def run(*args, **kwargs):
     # using kwargs we can get access to the shell, and from within the event
@@ -25,11 +28,17 @@ def run(*args, **kwargs):
     game = kwargs['game']
 
     text = [
-        "\nWhoa... What in the name of Java is that? Jason is planning on hiding a virus\nwithin your file system. I'm guessing he's planning on taking control of you\nduring our next big mission so he can say he proved me wrong and force me to \nterminate you.\n\n",
+        "\nWhoa... What in the name of Java is that? Jason is planning on "
+        "hiding a virus\nwithin your file system. I'm guessing he's planning "
+        "on taking control of you\nduring our next big mission so he can say "
+        "he proved me wrong and force me to \nterminate you.\n\n",
 
-        "That was an incredible find! You are learning quickly. And since you found this,\nI will keep a close eye on your file system and make sure any virus is destroyed\nright away.\n\n",
+        "That was an incredible find! You are learning quickly. And since you "
+        "found this,\nI will keep a close eye on your file system and make "
+        "sure any virus is destroyed\nright away.\n\n",
 
-        "I will make sure Jason is arrested for this. Now let's get back to work and show\nthe world what we're capable of!\n\n"
+        "I will make sure Jason is arrested for this. Now let's get back to "
+        "work and show\nthe world what we're capable of!\n\n"
     ]
 
     filename = '.virus'

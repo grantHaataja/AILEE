@@ -13,7 +13,7 @@ import virus
 def check_run(*args, **kwargs):
     if len(kwargs['game'].history) == 0:
         return False
-    if not 'event9' in kwargs['game'].events_run:
+    if 'event9' not in kwargs['game'].events_run:
         return False
 
     check = kwargs['game'].event10
@@ -88,9 +88,9 @@ def run(*args, **kwargs):
 
                 # Print initial
                 clear()
-                print(colored(text[0],'yellow'))
-                time.sleep(1) #wait
-                typewriter(colored(text[1],color))
+                print(colored(text[0], 'yellow'))
+                time.sleep(1)  # wait
+                typewriter(colored(text[1], color))
                 time.sleep(2)
 
                 # Initiate eyeCancer
@@ -98,9 +98,9 @@ def run(*args, **kwargs):
 
                 # Reprint stuff so it looks like nothing changed
                 clear()
-                print(colored(text[0],'yellow'))
-                print(colored(text[1],color))
-                typewriter(colored(text[2],color))
+                print(colored(text[0], 'yellow'))
+                print(colored(text[1], color))
+                typewriter(colored(text[2], color))
                 time.sleep(3)
                 clear()
                 print('\n', end='\033[F')
@@ -115,11 +115,11 @@ def run(*args, **kwargs):
                 clear()
                 print('\n', end='\033[F')
                 time.sleep(7)
-                typewriter(colored(text[3],color))
+                typewriter(colored(text[3], color))
                 time.sleep(3)
-                typewriter(colored(text[4],color))
+                typewriter(colored(text[4], color))
                 time.sleep(3)
-                typewriter(colored(text[5],color))
+                typewriter(colored(text[5], color))
                 time.sleep(3)
                 clear()
                 print('\n', end='\033[F')
@@ -133,18 +133,19 @@ def run(*args, **kwargs):
     else:
         filename = 'message10.txt'
         if filename not in game.eventLogDir:
-            game.eventLogDir.addFile(filename, colored(''.join(text[1] + text[6]), color))
+            game.eventLogDir.addFile(filename, colored(''.join(text[1] + text[6]),
+                                                       color))
         if not game.skip_dialog:
             clear()
-            print(colored(text[0],'yellow'))
+            print(colored(text[0], 'yellow'))
             time.sleep(1)  # wait
-            typewriter(colored(text[1],color))
+            typewriter(colored(text[1], color))
             time.sleep(3)
             clear()
             print()
             time.sleep(1)
             # final paragraph
-            typewriter(colored(text[6],color))
+            typewriter(colored(text[6], color))
         else:
             print(colored('Event10 text skipped', 'red'))
 

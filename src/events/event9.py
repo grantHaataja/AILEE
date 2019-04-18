@@ -1,8 +1,10 @@
-#Ninth dialogue of the game
-#triggers after master password is found
+# Ninth dialogue of the game
+# triggers after master password is found
+
 import time
 from funfunctions import typewriter
 from termcolor import colored
+
 
 def check_run(*args, **kwargs):
     # check for 'ftp 140.24.3.12' in history
@@ -25,9 +27,12 @@ def run(*args, **kwargs):
     game = kwargs['game']
 
     text = [
-        "Whoa! That is an extremely sensitive file. If that password hash got into the wrong\nhands, it could destroy CCC completely!\n\n",
+        "Whoa! That is an extremely sensitive file. If that password hash got "
+        "into the wrong\nhands, it could destroy CCC completely!\n\n",
 
-        "Try to crack the hash with passrip and see if you can get the master password. If\nyou can, run the cryptobank executable file and see if you can login with the password.\n\n"
+        "Try to crack the hash with passrip and see if you can get the master "
+        "password. If\nyou can, run the cryptobank executable file and see if "
+        "you can login with the password.\n\n"
     ]
     filename = 'message09.txt'
     if filename not in game.eventLogDir:
@@ -35,7 +40,7 @@ def run(*args, **kwargs):
 
     if not game.skip_dialog:
         typewriter(colored(text[0],color))
-        time.sleep(3) #wait
+        time.sleep(3) # wait
         typewriter(colored(text[1],color))
     else:
         print(colored('Event9 text skipped', 'red'))

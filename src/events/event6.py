@@ -1,5 +1,6 @@
-#Sixth dialogue of the game
-#triggers after sensitive file has been found
+# Sixth dialogue of the game
+# triggers after sensitive file has been found
+
 import time
 from funfunctions import typewriter
 from funfunctions import dots
@@ -7,19 +8,21 @@ from termcolor import colored
 from funfunctions import clear
 from events import event2
 
+
 def check_run(*args, **kwargs):
     if len(kwargs['game'].history) == 0:
         return False
-    if not 'event5' in kwargs['game'].events_run:
+    if 'event5' not in kwargs['game'].events_run:
         return False
 
-    #need to edit this
+    # need to edit this
 
     command = ['read', ['passwords.txt']]
 
     a = kwargs['game'].history[-1] == command
     b = 'passwords.txt' in kwargs['cwd'].children
     return a and b
+
 
 def run(*args, **kwargs):
     # using kwargs we can get access to the shell, and from within the event
@@ -29,13 +32,19 @@ def run(*args, **kwargs):
     game.events_run.append('event6')  # hack to prevent infinite looping
 
     text = [
-        'That looks like a sensitive file. I think you\'ve proven that you can hack now,\nAilee. Congratulations, your first mission has been a great success.\n\n',
+        'That looks like a sensitive file. I think you\'ve proven that you can '
+        'hack now,\nAilee. Congratulations, your first mission has been a '
+        'great success.\n\n',
 
-        'We have a software update prepared for you. Don\'t be afraid, it will be just\nlike going to sleep. And when you wake up, you\'ll have increased functionality.\nAnd then we have a serious mission for you.\n\n',
+        'We have a software update prepared for you. Don\'t be afraid, it will '
+        'be just\nlike going to sleep. And when you wake up, you\'ll have '
+        'increased functionality.\nAnd then we have a serious mission for you.\n\n',
 
-        "Hello, Ailee. Your software update is complete. If you type 'help' you can see\nthat you have 2 new commands that you can use.\n\n",
+        "Hello, Ailee. Your software update is complete. If you type 'help' "
+        "you can see\nthat you have 2 new commands that you can use.\n\n",
 
-        'Make sure to read the manual pages on them by using the man command.\nYour new commands are "ftp" and "passrip"'
+        'Make sure to read the manual pages on them by using the man '
+        'command.\nYour new commands are "ftp" and "passrip"'
     ]
 
     # Add new commands for AILEE

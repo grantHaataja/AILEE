@@ -3,7 +3,7 @@
 import time
 from funfunctions import typewriter
 from termcolor import colored
-from replit import clear
+from funfunctions import clear
 from MainMenuException import MainMenuException
 
 import virus
@@ -13,7 +13,7 @@ def check_run(*args, **kwargs):
     return False
   if not 'event9' in kwargs['game'].events_run:
     return False
-    
+
   check = kwargs['game'].event10
   return check
 
@@ -43,23 +43,23 @@ def run(*args, **kwargs):
 
   virus_text = [
     "Transferring 20,577,046 BTC to acct#: 147-03489217...",
-    
+
     "\nTransfer complete\n",
 
     "Initiating internet shutdown...\n",
-    
+
     "Internet shutdown complete\n",
 
     "Removing all files...\n",
 
     "Encrypting hard drive...\n",
-    
+
     "Hard drive encryption successful\n",
 
     "Shutting down...\n"
   ]
 
-  #the bad ending 
+  #the bad ending
   if '.virus' in kwargs['game'].network['127.0.0.1'].fs:
     if not game.skip_dialog:
       # Runs the virus, if ctrl-c, enter loop

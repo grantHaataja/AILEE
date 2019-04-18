@@ -28,7 +28,7 @@ from game import Game
 from MainMenuException import MainMenuException
 import funfunctions
 
-from replit import clear
+from funfunctions import clear
 import time
 
 while True:

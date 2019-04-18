@@ -1,5 +1,5 @@
 from time import sleep
-from replit import clear
+from funfunctions import clear
 import curses
 import random
 

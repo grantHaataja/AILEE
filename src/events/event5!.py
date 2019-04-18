@@ -3,7 +3,7 @@
 import time
 from funfunctions import typewriter
 from termcolor import colored
-from replit import clear
+from funfunctions import clear
 from MainMenuException import MainMenuException
 import virus
 

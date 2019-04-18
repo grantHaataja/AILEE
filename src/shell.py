@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from termcolor import colored
-import replit
+import funfunctions
 
 import time
 import traceback, sys, random
@@ -38,9 +38,9 @@ class Shell(object):
     self.history = []
 
     self._setup()
-  
+
   def _setup(self):
-    replit.clear()
+    funfunctions.clear()
     s = "Loading new shell"
 
     print(s, end='\r')
@@ -53,21 +53,21 @@ class Shell(object):
       i += 1
       time.sleep(0.1)
     time.sleep(0.3)
-    replit.clear()
+    funfunctions.clear()
     #print(constants.title)
-  
+
   def _get_command_from_str(self, command_str):
     """
     Takes a command name, returns the executable object.
     """
-    
+
     if command_str == '':
       return False
     if command_str not in self.game.allowed_commands:
       return None
     cmd = self._command_dictionary[command_str]
     return cmd
-  
+
   def run_command(self, command, args):
     """
     Runs a command.
@@ -84,11 +84,11 @@ class Shell(object):
       shell=self,
       game=self.game,
     )
-  
+
   def take_input(self):
     user_input = input(self.prompt.format(
       COMP=str(self.computer.name),
-      CWD=str(self.cwd), 
+      CWD=str(self.cwd),
       USER=self.user),
     )
 
@@ -114,22 +114,22 @@ class Shell(object):
     if not (command or args):
       return  # skip empty input
     self.run_command(cmd, args)
-  
+
   def halt(self):
     self.running = False
-  
+
   def cmd_not_found(self):
     self.history.append([None, []])
     self.game.history.append([None, []])
     print("Command not found")
     #print(random.choice(CMD_NOT_FOUND_STRS))
-  
+
   def start_shell_loop(self):
     self.running = True
     while self.running:
 
       # This is the line of code that integrates the story VVV
-      
+
 
       try:
         self.run_command(events.doStory.run, [])

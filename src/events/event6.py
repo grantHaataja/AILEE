@@ -4,7 +4,7 @@ import time
 from funfunctions import typewriter
 from funfunctions import dots
 from termcolor import colored
-from replit import clear
+from funfunctions import clear
 from events import event2
 
 def check_run(*args, **kwargs):
@@ -30,11 +30,11 @@ def run(*args, **kwargs):
 
   text = [
     'That looks like a sensitive file. I think you\'ve proven that you can hack now,\nAilee. Congratulations, your first mission has been a great success.\n\n',
-    
+
     'We have a software update prepared for you. Don\'t be afraid, it will be just\nlike going to sleep. And when you wake up, you\'ll have increased functionality.\nAnd then we have a serious mission for you.\n\n',
-    
+
     "Hello, Ailee. Your software update is complete. If you type 'help' you can see\nthat you have 2 new commands that you can use.\n\n",
-    
+
     'Make sure to read the manual pages on them by using the man command.\nYour new commands are "ftp" and "passrip"'
   ]
 
@@ -71,4 +71,4 @@ def run(*args, **kwargs):
     time.sleep(2)
     typewriter(colored(text[3],color))
   else:
-    print(colored('event6 text skipped', 'red'))   
+    print(colored('event6 text skipped', 'red'))

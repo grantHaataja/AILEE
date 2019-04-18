@@ -6,7 +6,7 @@ Really just here to keep track of events and physical-level abstractions -- thin
 
 from computer import Computer, User
 import title
-from replit import clear
+from funfunctions import clear
 import funfunctions
 import executables
 
@@ -41,7 +41,7 @@ class Game(object):
       self.leave = self.skip_dialog is None
     except KeyboardInterrupt:
       self.leave = False
-  
+
   def add_commands(self, *commands):
     """
     Adds commands to the allowed list.
@@ -60,7 +60,7 @@ class Game(object):
     newagent = Agent(agent_name, game=self)
     self.agents.append(newagent)
     return newagent
-  
+
   def add_computer(self, ip_address, computer_name, *args, **kwargs):
     """
     Create a computer and add it to the network.

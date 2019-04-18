@@ -1,5 +1,5 @@
 from time import sleep
-from replit import clear
+from funfunctions import clear
 import curses
 
 # Don't fix to look correct in code, as it looks different in terminal
@@ -67,7 +67,7 @@ def run():
       if menuSelection == 2:
         menuSelection = 1
       elif menuSelection == 1:
-        if counter < 5: # Counter for secret 
+        if counter < 5: # Counter for secret
           counter += 1
         else:
           menuSelection = 0

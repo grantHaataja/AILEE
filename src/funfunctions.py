@@ -9,7 +9,14 @@ import random
 import secrets
 import sys
 import curses
-  
+import os, platform
+
+def clear():
+  if platform.system() == 'Linux':
+    cls = lambda: os.system('clear')
+  elif platform.system() == 'Windows':
+    cls = lambda: os.system('cls')
+
 def typewriter(text, speed='FAST'):
   '''
     Prints text to the screen as if it was being typed
@@ -46,14 +53,14 @@ def login(username=None, password=None):
     typewriter(username + '\n', 'SLOW')
   else:
     username = input(colored('Username: ', 'green'))
-  
+
   if password is not None:
     print(colored("Password: ", 'green'), end='')
     sleep(0.5)
     typewriter(('*' * len(password)) + '\n', 'SLOW')
   else:
     password = getpass()
-  
+
   return username, password
 
 def startAilee():

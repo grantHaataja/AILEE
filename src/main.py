@@ -1,6 +1,6 @@
-'''
+"""
 Run the game
-'''
+"""
 
 """
 Changes made by Misha after you left:
@@ -42,7 +42,9 @@ def main():
         comp = game.add_computer('127.0.0.1', 'localhost')
         game.eventLogDir = comp.fs.mkdir('chat_log')
         pDir = comp.fs.mkdir('go_here_first')
-        pDir.addFile('readme.txt', 'The "run" command runs .exe files.\n\nYou can use the command "cd .." to move up a directory')
+        pDir.addFile('readme.txt',
+                     'The "run" command runs .exe files.\n\nYou can use '
+                     'the command "cd .." to move up a directory')
         pDir.addFile('executable.exe', """
     Error: Unreadable file
     """)
@@ -64,7 +66,8 @@ def main():
             print("Just broke out of main loop")
             time.sleep(10)
         except MainMenuException:
-            pass # So the shutdown command returns to the main menu instead of exiting
+            pass  # So the shutdown command returns to the main menu instead of exiting
+
 
 if __name__ == '__main__':
     main()

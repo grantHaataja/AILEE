@@ -5,6 +5,7 @@ import shell
 import executables
 import funfunctions
 
+
 class Computer(object):
     """
     A glorified rock that does math really, *really* fast.

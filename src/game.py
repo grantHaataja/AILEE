@@ -10,6 +10,7 @@ from funfunctions import clear
 import funfunctions
 import executables
 
+
 class Game(object):
     """
     Handles Game objects.
@@ -71,7 +72,8 @@ class Game(object):
         self.network.update({ip_address:newcomp})
         return newcomp
 
-class Agent:
+
+class Agent(object):
     '''
     A (virtual) physical entity in the (virtual) real world
     '''

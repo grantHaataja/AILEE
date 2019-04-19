@@ -1,6 +1,6 @@
-'''
+"""
 Miscellaneous functions for FUN!
-'''
+"""
 
 from time import sleep
 from termcolor import colored
@@ -11,6 +11,7 @@ import sys
 import curses
 import os, platform
 
+
 def clear():
     if platform.system() == 'Linux':
         cls = lambda: os.system('clear')
@@ -18,10 +19,11 @@ def clear():
         cls = lambda: os.system('cls')
     cls()
 
+
 def typewriter(text, speed='FAST'):
-    '''
+    """
       Prints text to the screen as if it was being typed
-    '''
+    """
     if speed == 'NORM':
         speed = 0.1
     elif speed == 'FAST':
@@ -36,15 +38,17 @@ def typewriter(text, speed='FAST'):
         sys.stdout.flush()
         sleep(speed)
 
+
 def dots(text, n_dots, delay):
-    '''
+    """
     Running............
     Adds dots with delay.
-    '''
+    """
     for i in range(n_dots):
         print(text + '.'*i, end='\r')
         sleep(delay)
     print(text + '.'*i)
+
 
 def login(username=None, password=None):
     print(colored('Username: \nPassword: \033[F\033[F', 'green'), end='')
@@ -64,6 +68,7 @@ def login(username=None, password=None):
 
     return username, password
 
+
 def startAilee():
     print(colored('Administrator: ~/$ \n\033[F', 'green'), end='')
     sleep(2)
@@ -71,14 +76,15 @@ def startAilee():
     typewriter('AILEE.exe', 'SLOW')
     sleep(0.5)
 
+
 def passwordRandomizer(password='password', difficulty=0):
-    '''
+    """
       Auto-generates a password and returns it, based on a difficulty provided.
 
       Default difficulty is 0, and generates a password in the form of "password" but with random letters replaced with symbols and a random number of iterative numbers following. (ex: Pa5sw0rD1234)
 
       For any other difficulty specified, returns a password of length $difficulty using random tokens from the secrets module.
-    '''
+    """
     if difficulty == 0:
         password = list(password)
         i = 0
@@ -96,9 +102,9 @@ def passwordRandomizer(password='password', difficulty=0):
 
 
 def replaceToken(token):
-    '''
+    """
     This-for-that function to replace letters in a password with harder to crack variants
-    '''
+    """
     if token == 'p':
         return 'P'
     elif token == 'a':

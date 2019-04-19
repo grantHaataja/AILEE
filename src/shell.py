@@ -16,6 +16,7 @@ CMD_NOT_FOUND_STRS = [
     "command not found"
 ]
 
+
 class Shell(object):
     """
     Like a seashell.
@@ -54,7 +55,7 @@ class Shell(object):
             time.sleep(0.1)
         time.sleep(0.3)
         funfunctions.clear()
-        #print(constants.title)
+        # print(constants.title)
 
     def _get_command_from_str(self, command_str):
         """
@@ -122,7 +123,7 @@ class Shell(object):
         self.history.append([None, []])
         self.game.history.append([None, []])
         print("Command not found")
-        #print(random.choice(CMD_NOT_FOUND_STRS))
+        # print(random.choice(CMD_NOT_FOUND_STRS))
 
     def start_shell_loop(self):
         self.running = True
@@ -136,7 +137,6 @@ class Shell(object):
                 self.one_command()
             except KeyboardInterrupt:
                 print()
-                #print("\nYou can't leave! ", end='')
             except KeyError as e:
                 self.cmd_not_found()
             except AssertionError as e:
@@ -144,7 +144,9 @@ class Shell(object):
             except MainMenuException:
                 raise MainMenuException
             except Exception as e:
-                print(colored("Something went wrong.  I'm not quite sure what.  Maybe try again?", 'red'))
+                print(colored(
+                    "Something went wrong.  I'm not quite sure what.  "
+                    "Maybe try again?", 'red'))
                 # Uncomment VV for full tracebacks
                 #einfo = sys.exc_info()
                 #traceback.print_exception(*einfo)

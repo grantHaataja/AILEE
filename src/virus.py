@@ -3,6 +3,7 @@ from funfunctions import clear
 import curses
 import random
 
+
 def eyeCancer():
     try:
         stdscr = curses.initscr()

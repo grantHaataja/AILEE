@@ -76,6 +76,7 @@ def run():
                 menuSelection += 1
         printOptions(stdscr, menuSelection)
 
+
 def printOptions(stdscr, menuSelection):
     # reset options
     stdscr.addstr(14, 0, '                  ')

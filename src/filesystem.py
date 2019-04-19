@@ -1,9 +1,10 @@
 import termcolor
 
+
 class Directory:
-    '''
+    """
       Tree structure of directories and files
-    '''
+    """
     def __init__(self, name=None, parent=None, children=None):
         self.name = name or ''
         self.parent = parent or self # So root node points to itself as parent

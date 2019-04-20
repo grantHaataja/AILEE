@@ -79,10 +79,19 @@ class Game(object):
         Required: computer name and IP address (both str)
         Not required: anything else (but it gets passed to Computer.__init__)
         """
-        print("Game.add_computer: kwargs = {}".format(kwargs))
         newcomp = Computer(computer_name, *args, **kwargs, game=self)
-        self.network.update({ip_address:newcomp})
+        self.network.update({ip_address: newcomp})
         return newcomp
+
+    def add_prebuilt_computer(self, comp, addr):
+        """
+        Add a computer to the network. Takes one already built computer and
+        it's IP address.
+        :param comp: computer
+        :param addr: ip address
+        :return: nothing
+        """
+        self.network.update({addr: comp})
 
 
 class Agent(object):

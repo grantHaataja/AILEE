@@ -128,10 +128,6 @@ class Shell(object):
     def start_shell_loop(self):
         self.running = True
         while self.running:
-
-            # This is the line of code that integrates the story VVV
-
-
             try:
                 self.run_command(events.doStory.run, [])
                 self.one_command()
@@ -144,9 +140,9 @@ class Shell(object):
             except MainMenuException:
                 raise MainMenuException
             except Exception as e:
-                print(colored(
-                    "Something went wrong.  I'm not quite sure what.  "
-                    "Maybe try again?", 'red'))
+                #print(colored(
+                #    "Something went wrong.  I'm not quite sure what.  "
+                #    "Maybe try again?", 'red'))
                 # Uncomment VV for full tracebacks
-                #einfo = sys.exc_info()
-                #traceback.print_exception(*einfo)
+                einfo = sys.exc_info()
+                traceback.print_exception(*einfo)

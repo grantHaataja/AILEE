@@ -14,12 +14,16 @@ class Computer(object):
         """
         Put lightning into the math rock.
         """
-
+        print("Computer.__init__: kwargs = {}".format(kwargs))
         self.name = name
         self.fs = filesystem.Directory()
         self.game = kwargs.get('game', None)
-        self.ports = getattr(kwargs, 'ports', {})
-        self.users = getattr(kwargs, 'users', {})
+        self.ports = kwargs.get('ports', {})
+        self.users = kwargs.get('users', {})
+        self.vulns = kwargs.get('vulns', {})
+        for vuln in self.vulns.keys():
+            if self.game is not None:
+                self.game.add_vuln(vuln)
 
     def get_shell(self, user, agent=None):
         """

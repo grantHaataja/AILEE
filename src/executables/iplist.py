@@ -11,7 +11,9 @@ Usage: iplist -a emailaddress@example.com (adds IP address associated with email
 '''
 
 def mkpics(game):
-    newcomp = game.add_computer('120.33.7.242', 'picsHelpDesk')
+    newcomp = game.add_computer('120.33.7.242', 'picsHelpDesk', vulns={
+        'LI38_612 meta ssh security flaw': False
+    })
     newcomp.exploited = False
     newcomp.open_port({22: 'ssh', 443: 'https'})
     root = newcomp.fs
@@ -87,7 +89,9 @@ def mksafe(game):
   {:<9}          {}
   {:<9}          {}
 """.format(*sum(PASSWDS.items(), ()))
-    newcomp = game.add_computer('120.45.30.6', 'safeandsecurebanking')
+    newcomp = game.add_computer('120.45.30.6', 'safeandsecurebanking', vulns={
+        'WD45_702 reverse tcp shell': False
+    })
     newcomp.exploited = False
     newcomp.open_port({22: 'ssh', 80: 'http', 1100: 'unknown'})
     root = newcomp.fs

@@ -23,11 +23,13 @@ def run(*args, **kwargs):
     # need to change this so there are 2-3 possibilities that will execute based on
     # which IP address is entered
 
-    # windoors computer for safeandsecurebanking
-    if args[0] == '120.45.30.6':
-        print('Vulnerabilities found: WD45_702 Reverse tcp shell')
-    # lionux computer for vrypto bank
-    elif args[0] == '120.33.7.242':
-        print('Vulnerabilities found: LI38_612 meta ssh security flaw')
+    vulns = kwargs['game'].network[args[0]].vulns
+    if len(vulns.keys()) == 0:
+        print("No vulnerabilities found")
     else:
-        print('No vulnerabilities found')
+        print("{:<15}\tExploited?".format("Vulnerability"))
+        print("-------------------------")
+        for vuln in vulns.keys():
+            print("{:<15}\t{}".format(
+                vuln, vulns[vuln]
+            ))

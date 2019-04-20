@@ -23,7 +23,6 @@ def run(*args, **kwargs):
         print("===== SHELLS =====")
         print("Hello, {}.".format(agent.name))
         print("You are currently in shell #{}".format(shells.index(kwargs['shell'])))
-        agent = kwargs['agent']
 
         for i in range(len(shells)):
             print("{}: {}, {}".format(i, shells[i].user.name, shells[i].computer.name))
@@ -48,7 +47,7 @@ def run(*args, **kwargs):
                 print("What's going on here? args = {}".format(args))
                 return
 
-            if not getattr(box, 'exploited', True):
+            if not any(box.vulns.values()):
                 print("Couldn't create new shell on that machine")
                 return
 

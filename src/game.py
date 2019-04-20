@@ -29,6 +29,7 @@ class Game(object):
         self._variables = {}
         self.event10 = False
         self.forkbomb = False
+        self.vuln_database = []
 
         self.allowed_commands = [
             'cd', 'clear', 'echo', 'gnome', 'help', 'iplist', 'ls', 'man',
@@ -54,6 +55,16 @@ class Game(object):
                 self.allowed_commands.append(command)
         self.allowed_commands.sort()
 
+    def add_vuln(self, vuln):
+        """
+        Add a vulnerability to the vuln database if not already present.
+        :param vuln: Name of vulnerability to add.
+        :return: nothing
+        """
+        if vuln not in self.vuln_database:
+            self.vuln_database.append(vuln)
+            self.vuln_database.sort()
+
     def spawn_agent(self, agent_name):
         """
         Create an agent.
@@ -68,6 +79,7 @@ class Game(object):
         Required: computer name and IP address (both str)
         Not required: anything else (but it gets passed to Computer.__init__)
         """
+        print("Game.add_computer: kwargs = {}".format(kwargs))
         newcomp = Computer(computer_name, *args, **kwargs, game=self)
         self.network.update({ip_address:newcomp})
         return newcomp

@@ -1,5 +1,5 @@
 """
-"Spell ICUP"
+"Potato scanner"
 
 Description: Port Scan. Use against an IP address to detect what ports are open and can be\nconnected to
 

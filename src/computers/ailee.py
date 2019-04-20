@@ -8,7 +8,7 @@ import computer
 
 def mkailee(**kwargs):
     comp = computer.Computer('localhost',
-                             )
+                             game=kwargs['game'])
     kwargs['game'].eventLogDir = comp.fs.mkdir('chat_log')
     pDir = comp.fs.mkdir('go_here_first')
     pDir.addFile('readme.txt',

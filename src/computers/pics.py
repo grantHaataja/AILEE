@@ -5,7 +5,8 @@ import computer
 def mkpics(**kwargs):
     newcomp = computer.Computer('picsHelpDesk', vulns={
         'LI38_612 meta SSH security flaw': False,
-    })
+    },
+                                game=kwargs['game'])
     newcomp.exploited = False
     newcomp.open_port({22: 'ssh', 443: 'https'})
     root = newcomp.fs

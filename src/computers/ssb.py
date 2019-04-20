@@ -21,7 +21,8 @@ User acct.         Password
 def mksafe(**kwargs):
     newcomp = computer.Computer('safeandsecrebanking', vulns={
         'WD45_702 reverse tcp shell': False,
-    })
+    },
+                                game=kwargs['game'])
     newcomp.open_port({22: 'ssh', 80: 'http', 1100: 'unknown'})
     root = newcomp.fs
     binDir = root.mkdir('bin')

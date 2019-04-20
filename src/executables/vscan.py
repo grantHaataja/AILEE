@@ -32,6 +32,6 @@ def run(*args, **kwargs):
         print("-" * 40 + "\t----------")
         for vuln in vulns.keys():
             print("{:<40}\t{}".format(
-                vuln, vulns[vuln]
+                vuln, vulns[vuln][0]
             ))
             kwargs['game'].add_vuln(vuln)

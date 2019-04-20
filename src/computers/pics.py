@@ -2,9 +2,10 @@
 
 import computer
 
+
 def mkpics(**kwargs):
     newcomp = computer.Computer('picsHelpDesk', vulns={
-        'LI38_612 meta SSH security flaw': False,
+        'LI38_612 meta SSH security flaw': [False, 22],
     },
                                 game=kwargs['game'])
     newcomp.exploited = False
@@ -79,7 +80,7 @@ def mkpics(**kwargs):
         "far are you from\ncompleting the features I asked for?\n")
     erinemails.addFile(
         'RE:Update?.email',
-        "\nI'm sorry, I haven't been able to finish file creating or editting. "
+        "\nI'm sorry, I haven't been able to finish file creating or editing. "
         "Also grep\nand seds are nightmares and I haven't made any progress on "
         "them. The pyd\ninterpreter is working correctly though.\n")
 

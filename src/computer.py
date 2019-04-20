@@ -14,7 +14,6 @@ class Computer(object):
         """
         Put lightning into the math rock.
         """
-        print("Computer.__init__: kwargs = {}".format(kwargs))
         self.name = name
         self.fs = filesystem.Directory()
         self.game = kwargs.get('game', None)
@@ -55,7 +54,7 @@ class Computer(object):
 
     def __repr__(self):
         return self.name
-    __str__ = __repr__ # set __str__ as the same method as __repr__
+    __str__ = __repr__  # set __str__ as the same method as __repr__
 
 
 class User:
@@ -71,4 +70,4 @@ class User:
 
     def __repr__(self):
         return self.name
-    __str__ = __repr__ # set __str__ as the same method as __repr__
+    __str__ = __repr__  # set __str__ as the same method as __repr__

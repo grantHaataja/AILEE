@@ -44,7 +44,7 @@ def run(*args, **kwargs):
         "you can see\nthat you have 2 new commands that you can use.\n\n",
 
         'Make sure to read the manual pages on them by using the man '
-        'command.\nYour new commands are "ftp" and "passrip"'
+        'command.\nYour new commands are "ftp" and "passrip"\n\n'
     ]
 
     # Add new commands for AILEE

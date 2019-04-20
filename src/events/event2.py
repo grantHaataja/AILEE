@@ -2,8 +2,9 @@
 # triggers after player has run 20? commands
 
 import time
-from funfunctions import typewriter, passwordRandomizer
 from termcolor import colored
+
+from funfunctions import typewriter, passwordRandomizer
 
 
 def check_run(*args, **kwargs):

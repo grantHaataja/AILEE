@@ -2,11 +2,12 @@
 # triggers after Ailee does run runme.exe
 
 import time
-from funfunctions import typewriter
 from termcolor import colored
+
+import virus
 from funfunctions import clear
 from MainMenuException import MainMenuException
-import virus
+from funfunctions import typewriter
 
 
 def check_run(*args, **kwargs):

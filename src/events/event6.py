@@ -2,11 +2,9 @@
 # triggers after sensitive file has been found
 
 import time
-from funfunctions import typewriter
-from funfunctions import dots
 from termcolor import colored
-from funfunctions import clear
-from events import event2
+
+from funfunctions import clear, typewriter, dots
 
 
 def check_run(*args, **kwargs):

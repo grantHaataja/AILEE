@@ -1,8 +1,10 @@
-#First dialogue of the game
-#triggers when game is run initially
+# First dialogue of the game
+# triggers when game is run initially
+
 import time
-from funfunctions import typewriter
 from termcolor import colored
+
+from funfunctions import typewriter
 
 
 def check_run(*args, **kwargs):

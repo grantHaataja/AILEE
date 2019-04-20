@@ -106,10 +106,11 @@ def mksafe(game):
                     Phone: 555-390-6971
                     ''')
 
+
 COMPS = {
-    'customersolutions@pics.com':[mkpics, '120.33.7.242'],
-    'crypticcryptocurrency@ccc.com':[mkccc, '140.24.3.12'],
-    'safeandsecurebanking@ssb.com':[mksafe, '120.45.30.6']
+    'customersolutions@pics.com': [mkpics, '120.33.7.242'],
+    'crypticcryptocurrency@ccc.com': [mkccc, '140.24.3.12'],
+    'safeandsecurebanking@ssb.com': [mksafe, '120.45.30.6']
 }
 
 

@@ -19,7 +19,7 @@ User acct.         Password
 
 
 def mksafe(**kwargs):
-    newcomp = computer.Computer('safeandsecrebanking', vulns={
+    newcomp = computer.Computer('safeandsecurebanking', vulns={
         'WD45_702 reverse tcp shell': [False, 1100],
     },
                                 game=kwargs['game'])

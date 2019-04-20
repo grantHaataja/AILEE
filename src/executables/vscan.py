@@ -1,7 +1,8 @@
 """
 "Vitality Scanner"
 
-Description: Vulnerability Scan. Use against an IP address to detect system\nvulnerabilities
+Description: Vulnerability Scan. Use against an IP address to detect system
+vulnerabilities
 
 Usage: vscan xxx.xxx.xxx.xxx
 """
@@ -33,3 +34,4 @@ def run(*args, **kwargs):
             print("{:<15}\t{}".format(
                 vuln, vulns[vuln]
             ))
+            kwargs['game'].add_vuln(vuln)

@@ -28,10 +28,10 @@ def run(*args, **kwargs):
     if len(vulns.keys()) == 0:
         print("No vulnerabilities found")
     else:
-        print("{:<15}\tExploited?".format("Vulnerability"))
-        print("-------------------------")
+        print("{:<40}\tExploited?".format("Vulnerability"))
+        print("-" * 40 + "\t----------")
         for vuln in vulns.keys():
-            print("{:<15}\t{}".format(
+            print("{:<40}\t{}".format(
                 vuln, vulns[vuln]
             ))
             kwargs['game'].add_vuln(vuln)

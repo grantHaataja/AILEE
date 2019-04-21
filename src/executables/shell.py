@@ -25,7 +25,8 @@ def run(*args, **kwargs):
         print("You are currently in shell #{}".format(shells.index(kwargs['shell'])))
 
         for i in range(len(shells)):
-            print("{}: {}, {}".format(i, shells[i].user.name, shells[i].computer.name))
+            print("{}: {}, {}".format(i, shells[i].user.name,
+                                      shells[i].computer.name))
         print("==================")
 
     else:
@@ -47,7 +48,7 @@ def run(*args, **kwargs):
                 print("What's going on here? args = {}".format(args))
                 return
 
-            if not any(box.vulns.values()):
+            if (not any(box.vulns.values())) and (len(box.vulns) != 0):
                 print("Couldn't create new shell on that machine")
                 return
 
@@ -61,6 +62,7 @@ def run(*args, **kwargs):
                 selection = int(args[0])
             except ValueError:
                 print("must specify an int")
+                return
 
             try:
                 selected_shell = shells[selection]

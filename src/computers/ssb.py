@@ -35,4 +35,8 @@ def mksafe(**kwargs):
                     Email: customersolutions@pics.com
                     Phone: 555-390-6971
                     ''')
+
+    for key, val in PASSWDS.items():
+        kwargs['game'].add_pwd(val)
+
     return '120.45.30.6', newcomp

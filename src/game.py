@@ -4,9 +4,11 @@ The almighty Game class.
 Really just here to keep track of events and physical-level abstractions -- things that exist "physically", ie computers and agents.
 """
 
+import hashlib
+
 from computer import Computer, User
 import title
-from funfunctions import clear
+from funfunctions import clear, TwoWayDictionary
 import funfunctions
 import executables
 
@@ -30,6 +32,7 @@ class Game(object):
         self.event10 = False
         self.forkbomb = False
         self.vuln_database = []
+        self.pw_database = TwoWayDictionary()
 
         self.allowed_commands = [
             'cd', 'clear', 'echo', 'gnome', 'help', 'iplist', 'ls', 'man',
@@ -64,6 +67,18 @@ class Game(object):
         if vuln not in self.vuln_database:
             self.vuln_database.append(vuln)
             self.vuln_database.sort()
+
+    def add_pwd(self, pwd):
+        """
+        Add a new password to the global database.
+        :param newpwd: New password to add
+        :return: nothing
+        """
+        if pwd not in self.pw_database:
+            md5 = hashlib.md5()
+            md5.update(pwd.encode('utf-8'))
+            hash = md5.hexdigest()
+            self.pw_database[hash] = pwd
 
     def spawn_agent(self, agent_name):
         """
@@ -100,7 +115,7 @@ class Agent(object):
     '''
     def __init__(self, name, game=None):
         self.name = name
-        self.user = User(self.name)
+        self.user = User(self.name, game)
         self.computer = None
         self.shells = []
         self.game = game

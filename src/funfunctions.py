@@ -9,7 +9,19 @@ import random
 import secrets
 import sys
 import curses
-import os, platform
+import os
+import platform
+
+
+class TwoWayDictionary(dict):
+
+    def __setitem__(self, key, val):
+        dict.__setitem__(self, key, val)
+        dict.__setitem__(self, val, key)
+
+    def __delitem__(self, key):
+        dict.__delitem__(self, self[key])
+        dict.__delitem__(self, key)
 
 
 def clear():
@@ -105,19 +117,13 @@ def replaceToken(token):
     """
     This-for-that function to replace letters in a password with harder to crack variants
     """
-    if token == 'p':
-        return 'P'
-    elif token == 'a':
-        return '@'
-    elif token == 's':
-        return '5'
-    elif token == 'w':
-        return 'W'
-    elif token == 'o':
-        return '0'
-    elif token == 'r':
-        return 'R'
-    elif token == 'd':
-        return 'D'
-    else:
-        return token
+    mapping = {
+        'p': 'P',
+        'a': '@',
+        's': '5',
+        'w': 'W',
+        'o': '0',
+        'r': 'R',
+        'd': 'D',
+    }
+    return mapping.get(token, token)

@@ -120,10 +120,19 @@ def replaceToken(token):
     mapping = {
         'p': 'P',
         'a': '@',
+        'A': '4',
+        'B': '8',
         's': '5',
         'w': 'W',
         'o': '0',
         'r': 'R',
         'd': 'D',
+        'H': '#',
+        'W': 'VV',
+        'V': '\/',
+        'I': '1',
+        '1': 'I',
+        'S': '$',
+        'm': 'nn',
     }
     return mapping.get(token, token)

@@ -16,13 +16,14 @@ def mkccc(**kwargs):
     homeDir = root.mkdir('home')
 
     newpwd = funfunctions.passwordRandomizer("$tL8wn@mI0")
+    print("About to add {}".format(newpwd))
     kwargs['game'].add_pwd(newpwd)
 
     homeDir.addFile('.masterpasswd.txt', """
   This password is used to request crypto currency transfer to trusted client when it is necessary.
   crypto currency master password hash: {}
   """.format(kwargs['game'].pw_database[newpwd]))
-    homeDir.addFile('crypto.exe',"""
+    homeDir.addFile('crypto.exe', """
   Error: Unreadable file
   """)
 

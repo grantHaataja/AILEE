@@ -22,7 +22,7 @@ def run(*args, **kwargs):
         return
 
     if args[0] == 'crypto.exe':
-        if ((kwargs['computer'].name == 'ccc') and \
+        if ((kwargs['computer'].name == 'ccc') and
                 ('crypto.exe' in kwargs['cwd'].children)):
 
             pwd = input("Enter master password > ")

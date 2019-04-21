@@ -2,6 +2,7 @@
 
 import computer
 
+import funfunctions
 
 PASSWDS = {
     "admin": "banks4lyfe",
@@ -9,6 +10,9 @@ PASSWDS = {
     "john": "richguy123",
     "bill": "helpimbroke",
 }
+
+PASSWDS = {key: funfunctions.passwordRandomizer(val) for key, val in PASSWDS.items()}
+
 FILE_CONTENTS = """
 User acct.         Password
 {:<9}          {}

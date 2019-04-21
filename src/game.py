@@ -78,6 +78,7 @@ class Game(object):
             md5 = hashlib.md5()
             md5.update(pwd.encode('utf-8'))
             hash = md5.hexdigest()
+            print("Updating password database with {}: {}".format(pwd, hash))
             self.pw_database[hash] = pwd
 
     def spawn_agent(self, agent_name):

@@ -35,7 +35,7 @@ class Computer(object):
                 self.ports.update({port_no: service})
 
     def add_user(self, username):
-        self.users.update({username: User(username, self.game)})
+        self.users.update({username: User(username, game=self.game)})
 
     def get_user(self, username):
         try:
@@ -58,9 +58,9 @@ class Computer(object):
 
 
 class User:
-    '''
+    """
     User Account for a computer
-    '''
+    """
     def __init__(self, name, password=None, game=None):
         self.name = name
         self.password = password or funfunctions.passwordRandomizer()

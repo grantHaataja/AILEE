@@ -24,8 +24,10 @@ def main():
 
         if not game.skip_dialog:
             clear()
-            funfunctions.login(comp.get_user('Administrator').name,
-                               comp.get_user('Administrator').password)
+            time.sleep(3)
+            user = comp.get_user('Administrator')
+            time.sleep(5)
+            funfunctions.login(user.name, user.password)
             clear()
             funfunctions.startAilee()
         ailee.login(comp)

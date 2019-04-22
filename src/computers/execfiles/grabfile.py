@@ -11,6 +11,7 @@ import os
 FILES = {
     "localhost/go_here_first/executable.exe": 'ailee_base_exec.py',
     "ccc/home/crypto.exe": 'ccc_crypto_exec.py',
+    "picsHelpDesk/home/Jason/not_interesting/runme.exe": "pics_kill_exe.py",
 }
 RUNTIME_PREFIX = '/computers/execfiles/'
 

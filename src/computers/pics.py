@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import computer
-
+from .execfiles import grabfile
 
 def mkpics(**kwargs):
     newcomp = computer.Computer('picsHelpDesk', vulns={
@@ -25,9 +25,11 @@ def mkpics(**kwargs):
         "everyone has\ngone home, and add virus to AILEE home directory. Use "
         "hidden file format so no\none notices.")  # Hidden file here
     jasonproject.addFile('.virus', '')  # leave contents empty
-    jason.mkdir('not_interesting').addFile('runme.exe',
-                                           '',
-                                           permissions='--x')  # Kill EXE
+    jason.mkdir('not_interesting').addPrebuiltFile(
+        grabfile.get_exec_file(
+            "picsHelpDesk/home/Jason/not_interesting/runme.exe"
+        )
+    )
     jasonemails = jason.mkdir('emails')
     jasonemails.addFile(
         'AILEE.email',

@@ -27,7 +27,7 @@ class Game(object):
         self.network = {}
         self.history = []
         self.events_run = []
-        self.eventLogDir = None # Set in main.py
+        self.eventLogDir = None  # Set in main.py
         self._variables = {}
         self.event10 = False
         self.forkbomb = False
@@ -111,9 +111,9 @@ class Game(object):
 
 
 class Agent(object):
-    '''
+    """
     A (virtual) physical entity in the (virtual) real world
-    '''
+    """
     def __init__(self, name, game=None):
         self.name = name
         self.user = User(self.name, game)

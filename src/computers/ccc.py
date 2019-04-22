@@ -17,13 +17,14 @@ def mkccc(**kwargs):
     newpwd = funfunctions.passwordRandomizer("$tL8wn@mI0")
     print("About to add {}".format(newpwd))
     kwargs['game'].add_pwd(newpwd)
+    cbank.crypto_exec_pwd_hash = kwargs['game'].pw_database[newpwd]
 
     homeDir.addFile('.masterpasswd.txt', """
   This password is used to request crypto currency transfer to trusted client when it is necessary.
   crypto currency master password hash: {}
   """.format(kwargs['game'].pw_database[newpwd]))
     homeDir.addPrebuiltFile(grabfile.get_exec_file(
-        'localhost/go_here_first/executable.exe'
+        'ccc/home/crypto.exe'
     ))
 
     return '140.24.3.12', cbank

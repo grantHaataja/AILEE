@@ -99,7 +99,7 @@ def mkpics(**kwargs):
         "onion rings\nsomething healthy?\nlight beer\nsausage\npotato chips\n"
         "toilet paper\nyogurt\nsalami")
     mariowork = mario.mkdir('work?')
-    mariowork.addFile('gcc.c', permissions='---')
+    mariowork.addFile('gcc.c', '', permissions='---')
     mariowork.addFile(
         'gnome.c',
         '#include<stdio.h>\n\nint main(void) {\n\tprintf("Ho ho ho ha ha, ho '

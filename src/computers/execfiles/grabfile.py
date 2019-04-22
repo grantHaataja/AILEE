@@ -11,6 +11,7 @@ import os
 FILES = {
     "localhost/go_here_first/executable.exe": 'ailee_base_exec.py',
 }
+RUNTIME_PREFIX = '/computers/execfiles/'
 
 
 def get_exec_file(path):
@@ -22,10 +23,11 @@ def get_exec_file(path):
     """
 
     infilename = FILES[path]
-    if infilename not in os.listdir('.'):
+    if infilename not in os.listdir(os.getcwd() + RUNTIME_PREFIX):
+        print("cwd: {}\n{}".format(os.getcwd(), os.listdir('.')))
         return None
 
-    with open(infilename, 'r') as infile:
+    with open(os.getcwd() + RUNTIME_PREFIX + infilename, 'r') as infile:
         contents = infile.read()
 
     newfile = filesystem.File(

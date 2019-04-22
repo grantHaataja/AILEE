@@ -5,6 +5,7 @@ Computer factory for the "base" computer -- the one that AILEE lives on
 """
 
 import computer
+from .execfiles import grabfile
 
 def mkailee(**kwargs):
     comp = computer.Computer('localhost',
@@ -14,8 +15,9 @@ def mkailee(**kwargs):
     pDir.addFile('readme.txt',
                  'The "run" command runs .exe files\n\nYou can use '
                  'the command "cd .." to move up a directory.')
-    pDir.addFile('executable.exe', 'Error: Unreadable file',
-                 permissions='--x')
+    pDir.addPrebuiltFile(grabfile.get_exec_file(
+        "localhost/go_here_first/executable.exe"
+    ))  
     pDir.addFile('.hiddenFile.txt',
                  'I am a hidden file.  Good job finding me!')
 

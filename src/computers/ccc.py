@@ -2,7 +2,7 @@
 
 import computer
 import funfunctions
-import execfiles.grabfile as grabfile
+from .execfiles import grabfile
 
 def mkccc(**kwargs):
     cbank = computer.Computer('ccc',
@@ -23,6 +23,7 @@ def mkccc(**kwargs):
   crypto currency master password hash: {}
   """.format(kwargs['game'].pw_database[newpwd]))
     homeDir.addPrebuiltFile(grabfile.get_exec_file(
-        'localhost/go_here_first/executable.exe'))
+        'localhost/go_here_first/executable.exe'
+    ))
 
     return '140.24.3.12', cbank

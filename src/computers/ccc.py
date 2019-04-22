@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 
 import computer
-
 import funfunctions
-
+import execfiles.grabfile as grabfile
 
 def mkccc(**kwargs):
     cbank = computer.Computer('ccc',
@@ -23,8 +22,7 @@ def mkccc(**kwargs):
   This password is used to request crypto currency transfer to trusted client when it is necessary.
   crypto currency master password hash: {}
   """.format(kwargs['game'].pw_database[newpwd]))
-    homeDir.addFile('crypto.exe', """
-  Error: Unreadable file
-  """)
+    homeDir.addPrebuiltFile(grabfile.get_exec_file(
+        'localhost/go_here_first/executable.exe'))
 
     return '140.24.3.12', cbank

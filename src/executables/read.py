@@ -6,12 +6,22 @@ Description: Prints contents of a file to the terminal screen
 Usage: read file_name.txt
 """
 
+import filesystem
+
 
 def run(*args, **kwargs):
     assert len(args) == 1, "Must specify a file to read.\n\nUsage: read [filename]"
-    assert '.' in args[0], "target must be a file"
 
-    cdir = kwargs['cwd']
-    f = cdir[args[0]]
-    data = f.data
-    print(data)
+    try:
+        obj = kwargs['cwd'].children[args[0]]
+    except KeyError:
+        print("couldn't file file")
+        return
+
+    if isinstance(obj, filesystem.File):
+        if 'r' in obj.permissions:
+            print(obj.data)
+        else:
+            print("Unable to read file")
+    else:
+        print("Not a file")

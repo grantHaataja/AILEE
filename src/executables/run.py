@@ -8,6 +8,8 @@ Usage: run file_name.exe
 
 from termcolor import colored
 
+import filesystem
+
 
 def forkbomb():
     pass
@@ -17,8 +19,25 @@ def run(*args, **kwargs):
     assert len(args) == 1, \
         "Must specify an executable to run.\n\nUsage: run [executable]"
 
-    if args[0].split('.')[-1] != 'exe':
-        print("Unable to run file, must be .exe")
+    try:
+        obj = kwargs['cwd'].children[args[0]]
+    except KeyError:
+        print("Couldn't find file")
+        return
+
+    if (isinstance(obj, filesystem.File) and
+        ('x' in obj.permissions)):
+
+        # verify file hash matches original -- don't allow
+        # edited executables to be run
+        if obj.original_hash != obj.current_hash:
+            print("Cannot run modified files.")
+            return
+
+        code = obj.data
+
+        # TODO: there has to be a better way than this
+        exec(code)
         return
 
     if args[0] == 'crypto.exe':

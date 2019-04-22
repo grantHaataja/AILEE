@@ -14,6 +14,8 @@ Usage: ls -la (for long list format)
 
 from termcolor import colored
 
+import filesystem
+
 # use """list(kwargs['cwd'])""" to get the current working directory's contents
 
 
@@ -30,19 +32,28 @@ def run(*args, **kwargs):
         elif '.' not in arg:
             dirsToSearch += [arg]
     if len(dirsToSearch) == 0:
-        listDir(list(kwargs['cwd']), listAll, listMode)
+        listDir(kwargs['cwd'].children, listAll, listMode)
     else:
         print('Invalid use of ls. See manual page for details')
 
 
 def listDir(contents, listAll, listMode):
+
     if not listAll:
-        contents = [x for x in contents if x[0] != '.']
-    for item in contents:
-        if '.' not in item:
-            item = colored(item, 'blue', None, ['bold'])
-        elif len(item) > 4 and item[::-1][0:4] == 'exe.':
-            item = colored(item, 'green', None, ['bold'])
-        print(item, end=('\n' if listMode else '     '))
+        dolist = [x for x in contents.keys() if x[0] != '.']
+    else:
+        dolist = contents.keys()
+
+    for name in dolist:
+        obj = contents[name]
+        out = name
+
+        if isinstance(obj, filesystem.Directory):
+            out = colored(name, 'blue', None, ['bold'])
+        elif 'x' in obj.permissions:
+            out = colored(name, 'green', None, ['bold'])
+
+        print(out, end=('\n' if listMode else '     '))
+
     if not listMode and contents:
         print()

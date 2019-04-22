@@ -18,7 +18,7 @@ def mkpics(**kwargs):
     # Jason
     jason = home.mkdir('Jason')
     jasonproject = jason.mkdir('project')
-    jasonproject.addFile('exploit.c', 'Error: Access denied') # Add notes?
+    jasonproject.addFile('exploit.c', '', permissions='---') # Add notes?
     jasonproject.addFile(
         '.notes.txt',
         "Software update scheduled for end of day on Friday. Work late until "
@@ -26,7 +26,8 @@ def mkpics(**kwargs):
         "hidden file format so no\none notices.")  # Hidden file here
     jasonproject.addFile('.virus', '')  # leave contents empty
     jason.mkdir('not_interesting').addFile('runme.exe',
-                                           'Error: Unreadable file')  # Kill EXE
+                                           '',
+                                           permissions='--x')  # Kill EXE
     jasonemails = jason.mkdir('emails')
     jasonemails.addFile(
         'AILEE.email',
@@ -68,11 +69,12 @@ def mkpics(**kwargs):
     erincode.addFile(
         'pyd.c',
         "def run(*args, **kwargs):\n\n\tprint(kwargs)\n\nif args:\n"
-        "\texec(' '.join(args))")
-    erincode.addFile('grep.c', "Error: Access denied")
-    erincode.addFile('seds.c', "Error: Access denied")
-    erincode.addFile('mkdir.c', "Error: Access denied")
-    erincode.addFile('vim.c', "Error: Access denied")
+        "\texec(' '.join(args))",
+        permissions='r--')
+    erincode.addFile('grep.c', '', permissions='---')
+    erincode.addFile('seds.c', '', permissions='---')
+    erincode.addFile('mkdir.c', '', permissions='---')
+    erincode.addFile('vim.c', '', permissions='---')
     erinemails = erin.mkdir('emails')
     erinemails.addFile(
         'Update?.email',
@@ -97,7 +99,7 @@ def mkpics(**kwargs):
         "onion rings\nsomething healthy?\nlight beer\nsausage\npotato chips\n"
         "toilet paper\nyogurt\nsalami")
     mariowork = mario.mkdir('work?')
-    mariowork.addFile('gcc.c', "Error: Access denied")
+    mariowork.addFile('gcc.c', permissions='---')
     mariowork.addFile(
         'gnome.c',
         '#include<stdio.h>\n\nint main(void) {\n\tprintf("Ho ho ho ha ha, ho '

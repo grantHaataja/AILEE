@@ -14,7 +14,8 @@ def mkailee(**kwargs):
     pDir.addFile('readme.txt',
                  'The "run" command runs .exe files\n\nYou can use '
                  'the command "cd .." to move up a directory.')
-    pDir.addFile('executable.exe', 'Error: Unreadable file')
+    pDir.addFile('executable.exe', 'Error: Unreadable file',
+                 permissions='--x')
     pDir.addFile('.hiddenFile.txt',
                  'I am a hidden file.  Good job finding me!')
 

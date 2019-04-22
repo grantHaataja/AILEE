@@ -77,9 +77,9 @@ class Game(object):
         if pwd not in self.pw_database:
             md5 = hashlib.md5()
             md5.update(pwd.encode('utf-8'))
-            hash = md5.hexdigest()
-            print("Updating password database with {}: {}".format(pwd, hash))
-            self.pw_database[hash] = pwd
+            pwdhash = md5.hexdigest()
+            print("Updating password database with {}: {}".format(pwd, pwdhash))
+            self.pw_database[pwdhash] = pwd
 
     def spawn_agent(self, agent_name):
         """

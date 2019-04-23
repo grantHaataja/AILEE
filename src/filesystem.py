@@ -5,9 +5,10 @@ class Directory:
     """
       Tree structure of directories and files
     """
-    def __init__(self, name=None, parent=None, children=None):
+    def __init__(self, name=None, parent=None, children=None, permissions='r-x'):
         self.name = name or ''
-        self.parent = parent or self # So root node points to itself as parent
+        self.parent = parent or self  # So root node points to itself as parent
+        self.permissions = permissions
         self.children = {
             '.': self,
             '..': self.parent

@@ -32,7 +32,7 @@ def run(*args, **kwargs):
         elif '.' not in arg:
             dirsToSearch += [arg]
     if len(dirsToSearch) == 0:
-        listDir(kwargs['cwd'].children, listAll, listMode)
+        listDir(kwargs['cwd'].children, listAll,     listMode)
     else:
         print('Invalid use of ls. See manual page for details')
 
@@ -44,6 +44,10 @@ def listDir(contents, listAll, listMode):
     else:
         dolist = contents.keys()
 
+    maxnamelen = max([len(s) for s in dolist]) + 4
+    maxsize = max(len(contents[s]) for s in dolist)
+    output = ""
+
     for name in dolist:
         obj = contents[name]
         out = name
@@ -53,7 +57,14 @@ def listDir(contents, listAll, listMode):
         elif 'x' in obj.permissions:
             out = colored(name, 'green', None, ['bold'])
 
-        print(out, end=('\n' if listMode else '     '))
+        if listMode:
+            out = f"{out:{maxnamelen}} {obj.permissions} {len(obj):>{maxsize}}\n"
+        else:
+            out = f"{out:{maxnamelen}}"
+
+        output += out
+    print("maxnamelen: {}".format(maxnamelen))
+    print(output)
 
     if not listMode and contents:
         print()

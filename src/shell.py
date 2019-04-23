@@ -133,8 +133,8 @@ class Shell(object):
                 self.one_command()
             except KeyboardInterrupt:
                 print()
-            except KeyError as e:
-                self.cmd_not_found()
+            #except KeyError as e:
+            #    self.cmd_not_found()
             except AssertionError as e:
                 print(str(e))
             except MainMenuException:

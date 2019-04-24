@@ -5,10 +5,12 @@ class Directory:
     """
       Tree structure of directories and files
     """
-    def __init__(self, name=None, parent=None, children=None, permissions='r-x'):
+    def __init__(self, name=None, parent=None, children=None, permissions='r-x',
+                 owner=None):
         self.name = name or ''
         self.parent = parent or self  # So root node points to itself as parent
         self.permissions = permissions
+        self.owner = owner or 'n/a'
         self.children = {
             '.': self,
             '..': self.parent
@@ -62,7 +64,7 @@ class File:
         self.name = name
         self.data = data
         self.permissions = permissions
-        self.owner = owner
+        self.owner = owner or 'n/a'
         self._original_hash = hashlib.md5(data.encode('utf-8')).hexdigest()
         self._current_hash = hashlib.md5(data.encode('utf-8')).hexdigest()
 

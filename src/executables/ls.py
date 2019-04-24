@@ -32,7 +32,7 @@ def run(*args, **kwargs):
         elif '.' not in arg:
             dirsToSearch += [arg]
     if len(dirsToSearch) == 0:
-        listDir(kwargs['cwd'].children, listAll,     listMode)
+        listDir(kwargs['cwd'].children, listAll, listMode)
     else:
         print('Invalid use of ls. See manual page for details')
 
@@ -42,11 +42,9 @@ def listDir(contents, listAll, listMode):
     if not listAll:
         dolist = [x for x in contents.keys() if x[0] != '.']
     else:
-        dolist = contents.keys()
+        dolist = list(contents.keys())
 
-    maxnamelen = max([len(s) for s in dolist]) + 4
-    maxsize = max(len(contents[s]) for s in dolist)
-    output = ""
+    output = []
 
     for name in dolist:
         obj = contents[name]
@@ -57,14 +55,26 @@ def listDir(contents, listAll, listMode):
         elif 'x' in obj.permissions:
             out = colored(name, 'green', None, ['bold'])
 
+        output.append(out)
+
+    maxnamelen = max([len(s) for s in output]) + 4
+    maxownerlen = max([len(contents[s].owner) for s in dolist])
+    maxsize = max(len(str(len(contents[s]))) for s in dolist)
+    final_output = ""
+
+    for i in range(len(output)):
+        obj = contents[dolist[i]]
+        out = output[i]
         if listMode:
-            out = f"{out:{maxnamelen}} {obj.permissions} {len(obj):>{maxsize}}\n"
+            out = f"{obj.permissions} {obj.owner:<{maxownerlen}} {len(obj):>{maxsize}} {out}\n"
         else:
-            out = f"{out:{maxnamelen}}"
+            out = f"{out:<{maxnamelen}}"
 
-        output += out
-    print("maxnamelen: {}".format(maxnamelen))
-    print(output)
+        final_output += out
 
-    if not listMode and contents:
-        print()
+    # in listMode, the trailing newline on the end of the format string takes
+    # care of the necessary last newline
+    if listMode:
+        print(final_output, end='')
+    else:
+        print(final_output)

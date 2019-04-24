@@ -17,7 +17,7 @@ FILES = {
 RUNTIME_PREFIX = '/computers/execfiles/'
 
 
-def get_exec_file(path):
+def get_exec_file(path, **kwargs):
     """
     Returns the File object that can be used to represent the executable
     file.
@@ -37,6 +37,7 @@ def get_exec_file(path):
         path.split('/')[-1],
         contents,
         permissions='--x',
+        **kwargs,
     )
 
     return newfile

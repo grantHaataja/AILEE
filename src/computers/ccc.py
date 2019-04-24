@@ -4,10 +4,10 @@ import computer
 import funfunctions
 from .execfiles import grabfile
 
+
 def mkccc(**kwargs):
     cbank = computer.Computer('ccc',
                               game=kwargs['game'])
-    cbank.exploited = False
     cbank.open_port({19: 'ftp', 80: 'http', 443: 'https'})
     root = cbank.fs
     binDir = root.mkdir('bin')

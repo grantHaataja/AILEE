@@ -32,7 +32,7 @@ class Game(object):
         self.event10 = False
         self.forkbomb = False
         self.vuln_database = []
-        self.pw_database = TwoWayDictionary()
+        self.pw_database = {}
 
         self.allowed_commands = [
             'cd', 'clear', 'echo', 'gnome', 'help', 'iplist', 'ls', 'man',
@@ -79,7 +79,8 @@ class Game(object):
             md5.update(pwd.encode('utf-8'))
             pwdhash = md5.hexdigest()
             print("Updating password database with {}: {}".format(pwd, pwdhash))
-            self.pw_database[pwdhash] = pwd
+            newval = [pwd, False]
+            self.pw_database[pwdhash] = newval
 
     def spawn_agent(self, agent_name):
         """

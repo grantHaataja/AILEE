@@ -60,17 +60,18 @@ class File:
     '''
       Stores things. Like data, machine code, and blackmail
     '''
-    def __init__(self, name, data='', permissions='r--', owner=None):
+    def __init__(self, name, data='', permissions='r--', owner=None, **kwargs):
         self.name = name
-        self.data = data
+        self._data = data
         self.permissions = permissions
         self.owner = owner or 'n/a'
         self._original_hash = hashlib.md5(data.encode('utf-8')).hexdigest()
         self._current_hash = hashlib.md5(data.encode('utf-8')).hexdigest()
+        self._kwargs = kwargs
 
     def append(self, data):
-        self.data += data
-        self._current_hash = hashlib.md5(data.encode('utf-8')).hexdigest()
+        self._data += data
+        self._current_hash = hashlib.md5(self._data.encode('utf-8')).hexdigest()
 
     @property
     def original_hash(self):
@@ -80,9 +81,13 @@ class File:
     def current_hash(self):
         return self._current_hash
 
+    @property
+    def data(self):
+        return self._data
+
     def __repr__(self):
         return self.name
     __str__ = __repr__ # set __str__ as the same method as __repr__
 
     def __len__(self):
-        return len(self.data)
+        return len(self._data)

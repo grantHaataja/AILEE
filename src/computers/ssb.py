@@ -42,5 +42,8 @@ def mksafe(**kwargs):
 
     for key, val in PASSWDS.items():
         kwargs['game'].add_pwd(val)
+        for pwhash, pw in kwargs['game'].pw_database.items():
+            if pw[0] == val:
+                pw[1] = True
 
     return '120.45.30.6', newcomp

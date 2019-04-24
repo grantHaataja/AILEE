@@ -1,15 +1,21 @@
 """
 "Love Story"
 
-Description: Lists the current directory's contents, which can be files or other\ndirectories (keep in mind the current directory may be empty)
+Description: Lists the current directory's contents, which can be files or other
+directories (keep in mind the current directory may be empty)
 
 Items listed in blue are directories (folder)
 
-Option -la (long list all): Lists the current directory's contents in long list\nformat
+Allowed flags:
 
-Usage: ls
+-a: list all files and folders, including hidden ones
+-l: "list" format.  Shows more details, including permissions, owner, and size
 
-Usage: ls -la (for long list format)
+Allowed usages:
+$ ls
+$ ls -a
+$ ls -l
+$ ls -la
 """
 
 from termcolor import colored

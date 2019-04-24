@@ -9,9 +9,13 @@ puts it in the current working directory.
 Usage: gcc [filename]
 """
 
+import computers.execfiles.grabfile as grabfile
+
 
 def run(*args, **kwargs):
 
     cwd = kwargs['cwd']
     if 'a.exe' not in cwd.children:
-        cwd.addFile('a.exe', "Error: Unreadable file")
+        cwd.addPrebuiltFile(
+            grabfile.get_exec_file("a.out")
+        )

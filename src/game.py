@@ -34,7 +34,7 @@ class Game(object):
         self.allowed_commands = [
             'cd', 'clear', 'echo', 'gnome', 'help', 'iplist', 'ls', 'man',
             'ping', 'pscan', 'shell', 'shutdown', 'vscan', 'exploit', 'pyd',
-            'read', 'run', 'gcc', 'passrip',
+            'read', 'run', 'gcc',
         ]
 
         # Run intro

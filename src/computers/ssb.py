@@ -1,8 +1,11 @@
 # -*- coding: utf-8 -*-
 
-import computer
+import hashlib
 
+import computer
 import funfunctions
+
+md5it = lambda s: hashlib.md5(s.encode('utf-8')).hexdigest()
 
 PASSWDS = {
     "admin": "banks4lyfe",
@@ -14,12 +17,12 @@ PASSWDS = {
 PASSWDS = {key: funfunctions.passwordRandomizer(val) for key, val in PASSWDS.items()}
 
 FILE_CONTENTS = """
-User acct.         Password
-{:<9}          {}
-{:<9}          {}
-{:<9}          {}
-{:<9}          {}
-""".format(*sum(PASSWDS.items(), ()))
+User acct.         Hash                             Password
+{:<9}          {} {}
+{:<9}          {} {}
+{:<9}          {} {}
+{:<9}          {} {}
+""".format(*sum([(s, md5it(PASSWDS[s]), PASSWDS[s]) for s in PASSWDS.keys()], ()))
 
 
 def mksafe(**kwargs):

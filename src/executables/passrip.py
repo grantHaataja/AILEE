@@ -19,13 +19,15 @@ import funfunctions
 def run(*args, **kwargs):
 
     if len(args) == 0:
-        print("Known passwords:")
-        print("----------------")
+        print("                 Already known passwords:           \n")
+        print("            Hash (MD5)                 Plaintext    ")
+        print("-------------------------------- -------------------")
         for hash, pwd in kwargs['game'].pw_database.items():
-            if pwd[1]:
-                print("{}:{}".format(hash, pwd[0]))
-            else:
-                print(hash)
+            if pwd[2]:
+                if pwd[1]:
+                    print("{}:{}".format(hash, pwd[0]))
+                else:
+                    print(hash)
 
     if len(args) == 1:
 

@@ -8,9 +8,6 @@ import hashlib
 
 from computer import Computer, User
 import title
-from funfunctions import clear, TwoWayDictionary
-import funfunctions
-import executables
 
 
 class Game(object):
@@ -37,7 +34,7 @@ class Game(object):
         self.allowed_commands = [
             'cd', 'clear', 'echo', 'gnome', 'help', 'iplist', 'ls', 'man',
             'ping', 'pscan', 'shell', 'shutdown', 'vscan', 'exploit', 'pyd',
-            'read', 'run', 'gcc',
+            'read', 'run', 'gcc', 'passrip',
         ]
 
         # Run intro
@@ -78,8 +75,11 @@ class Game(object):
             md5 = hashlib.md5()
             md5.update(pwd.encode('utf-8'))
             pwdhash = md5.hexdigest()
-            print("Updating password database with {}: {}".format(pwd, pwdhash))
-            newval = [pwd, False]
+            #print("Updating password database with {}: {}".format(pwd, pwdhash))
+            # {
+            #  [plaintext, is-cracked, is-discovered],
+            # }
+            newval = [pwd, False, False]
             self.pw_database[pwdhash] = newval
 
     def spawn_agent(self, agent_name):

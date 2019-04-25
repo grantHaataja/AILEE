@@ -33,6 +33,7 @@ def deal_with_hashes(content, game):
             if cleartext in content:
                 game.pw_database[hash][1] = True
 
+
 def run(*args, **kwargs):
     assert len(args) == 1, "Must specify a file to read.\n\nUsage: read [filename]"
 

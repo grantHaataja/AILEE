@@ -15,7 +15,6 @@ def mkccc(**kwargs):
     homeDir = root.mkdir('home')
 
     newpwd = funfunctions.passwordRandomizer("$tL8wn@mI0")
-    print("About to add {}".format(newpwd))
     kwargs['game'].add_pwd(newpwd)
 
     for key, val in kwargs['game'].pw_database.items():

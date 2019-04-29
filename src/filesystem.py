@@ -104,7 +104,7 @@ class Directory(object):
 
     def mkdir(self, name, **kwargs):
         assert (name not in self.children), 'Directory already exists'
-        newDir = Directory(name, self, **kwargs)
+        newDir = Directory(name=name, parent=self, **kwargs)
         self.children.update({name: newDir})
         return newDir
 
@@ -129,7 +129,21 @@ class Directory(object):
         return (fName for fName in self.children)
 
     def __repr__(self, base=True):
-        return (self.parent.__repr__(base=False) + '/' if self.parent.name else '') + self.name + ('/' if base else '')
+        output = ""
+        if self.parent is not self:
+            up1 = self.parent
+            while isinstance(up1, Directory):
+                output = up1.name + "/" + output
+                if up1 is up1.parent:
+                    output = '/' + output
+                    break
+                else:
+                    up1 = up1.parent
+        output += self.name
+        if base:
+            output += '/'
+        return output
+
     __str__ = __repr__  # set __str__ as the same method as __repr__
 
     def __getitem__(self, item):

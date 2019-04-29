@@ -34,7 +34,7 @@ def main():
         try:
             ailee.shells[0].start_shell_loop()
             print("Just broke out of main loop")
-            time.sleep(10)
+            break
         except MainMenuException:
             pass  # So the shutdown command returns to the main menu
                   # instead of exiting

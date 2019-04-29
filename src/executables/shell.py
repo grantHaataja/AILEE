@@ -48,14 +48,18 @@ def run(*args, **kwargs):
                 print("What's going on here? args = {}".format(args))
                 return
 
-            if (not any(box.vulns.values())) and (len(box.vulns) != 0):
-                print("Couldn't create new shell on that machine")
-                return
+            vulnerable = any(box.vulns.values())
+            has_vulns = len(box.vulns) != 0
+            have_creds = 'cred_login' in kwargs.keys()
 
-            new_shell = box.get_shell(kwargs['user'], kwargs['agent'])
-            agent.shells.append(new_shell)
-            run('-1', **kwargs)  # -1 is last element index in python
+            allowed = (has_vulns and vulnerable) or have_creds
 
+            if allowed:
+                new_shell = box.get_shell(kwargs['user'], kwargs['agent'])
+                agent.shells.append(new_shell)
+                run('-1', **kwargs)  # -1 is last element index in python
+            else:
+                print("Couldn't create a new shell on that machine.")
         else:
             assert len(args) == 1, "expected only 1 argument"
             try:

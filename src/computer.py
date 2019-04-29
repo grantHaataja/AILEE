@@ -37,6 +37,9 @@ class Computer(object):
     def add_user(self, username):
         self.users.update({username: User(username, game=self.game)})
 
+    def add_prebuilt_user(self, user):
+        self.users.update({user.name: user})
+
     def get_user(self, username):
         try:
             return self.users[username]

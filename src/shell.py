@@ -4,7 +4,9 @@ from termcolor import colored
 import funfunctions
 
 import time
-import traceback, sys, random
+import traceback
+import sys
+import random
 
 import executables
 import events
@@ -13,7 +15,12 @@ from MainMenuException import MainMenuException
 DEFAULT_PROMPT = colored("AILEE@{COMP}: {CWD}$ ", 'green')
 
 CMD_NOT_FOUND_STRS = [
-    "command not found"
+    "command not found",
+    "Nope, don't know that one",
+    "This isn't Google",
+    "NOOB!"
+    "Segmentation fault (core dumped)",
+
 ]
 
 
@@ -69,7 +76,7 @@ class Shell(object):
         cmd = self._command_dictionary[command_str]
         return cmd
 
-    def run_command(self, command, args):
+    def run_command(self, command, args, **kwargs):
         """
         Runs a command.
 
@@ -84,6 +91,7 @@ class Shell(object):
             agent=self.agent,
             shell=self,
             game=self.game,
+            **kwargs
         )
 
     def take_input(self):

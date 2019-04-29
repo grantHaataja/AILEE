@@ -92,7 +92,10 @@ class Directory(object):
     def __init__(self, name=None, parent=None, children=None, permissions='r-xr-x',
                  owner=None):
         self.name = name or ''
-        self.parent = parent or self  # So root node points to itself as parent
+        if parent is None:
+            self.parent = self
+        else:
+            self.parent = parent
         self.permissions = Permissions(permissions)
         self.owner = owner or 'n/a'
         self.children = {
@@ -135,7 +138,6 @@ class Directory(object):
             while isinstance(up1, Directory):
                 output = up1.name + "/" + output
                 if up1 is up1.parent:
-                    output = '/' + output
                     break
                 else:
                     up1 = up1.parent

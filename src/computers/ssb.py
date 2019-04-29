@@ -31,6 +31,9 @@ def mksafe(**kwargs):
     },
                                 game=kwargs['game'])
     newcomp.open_port({22: 'ssh', 80: 'http', 1100: 'unknown'})
+    users = [computer.User(name, pwd, kwargs['game']) for name, pwd in PASSWDS.items()]
+    for user in users:
+        newcomp.add_prebuilt_user(user)
     root = newcomp.fs
     binDir = root.mkdir('bin')
     logDir = root.mkdir('log')

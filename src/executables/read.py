@@ -44,7 +44,12 @@ def run(*args, **kwargs):
         return
 
     if isinstance(obj, filesystem.File):
-        if 'r' in obj.permissions:
+        if kwargs['user'].name == obj.owner:
+            allowed = obj.permissions.read_owner
+        else:
+            allowed = obj.permissions.read_users
+
+        if allowed:
             print(obj.data)
             deal_with_hashes(obj.data, kwargs['game'])
         else:

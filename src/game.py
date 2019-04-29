@@ -71,7 +71,14 @@ class Game(object):
         :param newpwd: New password to add
         :return: nothing
         """
-        if pwd not in self.pw_database:
+
+        pwd_already_known = False
+        for hash, data in self.pw_database.items():
+            if data[0] == pwd:
+                pwd_already_known = True
+                break
+
+        if not pwd_already_known:
             md5 = hashlib.md5()
             md5.update(pwd.encode('utf-8'))
             pwdhash = md5.hexdigest()

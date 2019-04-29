@@ -71,8 +71,9 @@ def listDir(contents, listAll, listMode):
     for i in range(len(output)):
         obj = contents[dolist[i]]
         out = output[i]
+        ptype = 'd' if isinstance(obj, filesystem.Directory) else '-'
         if listMode:
-            out = f"{obj.permissions} {obj.owner:<{maxownerlen}} {len(obj):>{maxsize}} {out}\n"
+            out = f"{ptype}{obj.permissions} {obj.owner:<{maxownerlen}} {len(obj):>{maxsize}} {out}\n"
         else:
             out = f"{out:<{maxnamelen}}"
 

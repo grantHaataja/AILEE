@@ -36,7 +36,7 @@ def get_exec_file(path, **kwargs):
     newfile = filesystem.File(
         path.split('/')[-1],
         contents,
-        permissions='--x',
+        permissions='--xr-x',
         **kwargs,
     )
 

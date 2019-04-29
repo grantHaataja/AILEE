@@ -6,13 +6,25 @@ from .execfiles import grabfile
 
 
 def mkccc(**kwargs):
-    cbank = computer.Computer('ccc',
-                              game=kwargs['game'])
+    cbank = computer.Computer(
+        'ccc',
+        game=kwargs['game'],
+        vulns={
+            '_ftp_password_crack': [False, 19],
+        }
+    )
     cbank.open_port({19: 'ftp', 80: 'http', 443: 'https'})
     root = cbank.fs
     binDir = root.mkdir('bin')
     logDir = root.mkdir('log')
     homeDir = root.mkdir('home')
+
+    admin = computer.User(
+        "admin",
+        password=kwargs['game'].network['120.45.30.6'].users['admin'].password,
+        game=kwargs['game'],
+    )
+    cbank.add_prebuilt_user(admin)
 
     newpwd = funfunctions.passwordRandomizer("$tL8wn@mI0")
     kwargs['game'].add_pwd(newpwd)

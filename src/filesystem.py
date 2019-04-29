@@ -1,15 +1,99 @@
-import termcolor
 import hashlib
 
-class Directory:
+
+class Permissions(object):
+    """
+    rwxrwx
+    |||||\ Owner exec
+    ||||\ Owner write
+    |||\ Owner read
+    ||\ General user exec
+    |\ General user write
+    \ General user read
+    """
+
+    def __init__(self, perms):
+        self._bits = perms
+        assert len(self._bits) == 6
+
+    def _set_bit(self, n, newval):
+        bits = list(self._bits)
+        bits[n] = newval
+        self._bits = ''.join(bits)
+
+    def __str__(self):
+        return self._bits
+
+    def __eq__(self, other):
+        return self._bits == other._bits
+
+    def __hash__(self):
+        return hash(self._bits)
+
+    def __getitem__(self, bit):
+        return self._bits[bit]
+
+    def __setitem__(self, bit, newval):
+        self._set_bit(bit, newval)
+
+    @property
+    def read_users(self):
+        return self._bits[0] == 'r'
+
+    @read_users.setter
+    def read_users(self, allowed):
+        self._set_bit(0, 'r' if allowed else '-')
+
+    @property
+    def write_users(self):
+        return self._bits[1] == 'w'
+
+    @write_users.setter
+    def write_users(self, allowed):
+        self._set_bit(1, 'w' if allowed else '-')
+
+    @property
+    def exec_users(self):
+        return self._bits[2] == 'x'
+
+    @exec_users.setter
+    def exec_users(self, allowed):
+        self._set_bit(2, 'x' if allowed else '-')
+
+    @property
+    def read_owner(self):
+        return self._bits[3] == 'r'
+
+    @read_owner.setter
+    def read_owner(self, allowed):
+        self._set_bit(3, 'r' if allowed else '-')
+
+    @property
+    def write_owner(self):
+        return self._bits[4] == 'w'
+
+    @write_owner.setter
+    def write_owner(self, allowed):
+        self._set_bit(4, 'w' if allowed else '-')
+
+    @property
+    def exec_owner(self):
+        return self._bits[5] == 'x'
+
+    @exec_owner.setter
+    def exec_owner(self, allowed):
+        self._set_bit(5, 'x' if allowed else '-')
+
+
+class Directory(object):
     """
       Tree structure of directories and files
     """
-    def __init__(self, name=None, parent=None, children=None, permissions='r-x',
+    def __init__(self, name=None, parent=None, children=None, permissions='r-xr-x',
                  owner=None):
         self.name = name or ''
         self.parent = parent or self  # So root node points to itself as parent
-        self.permissions = permissions
+        self.permissions = Permissions(permissions)
         self.owner = owner or 'n/a'
         self.children = {
             '.': self,
@@ -18,9 +102,9 @@ class Directory:
         if type(children) is dict:
             self.children.update(children)
 
-    def mkdir(self, name):
+    def mkdir(self, name, **kwargs):
         assert (name not in self.children), 'Directory already exists'
-        newDir = Directory(name, self)
+        newDir = Directory(name, self, **kwargs)
         self.children.update({name: newDir})
         return newDir
 
@@ -53,17 +137,19 @@ class Directory:
         return self.children[item]
 
     def __len__(self):
-        return len(self.children)
+        # Remove the "." and ".." folders from the size
+        # They're not really there
+        return len(self.children) - 2
 
 
-class File:
+class File(object):
     '''
       Stores things. Like data, machine code, and blackmail
     '''
-    def __init__(self, name, data='', permissions='r--', owner=None, **kwargs):
+    def __init__(self, name, data='', permissions='r--r--', owner=None, **kwargs):
         self.name = name
         self._data = data
-        self.permissions = permissions
+        self.permissions = Permissions(permissions)
         self.owner = owner or 'n/a'
         self._original_hash = hashlib.md5(data.encode('utf-8')).hexdigest()
         self._current_hash = hashlib.md5(data.encode('utf-8')).hexdigest()
@@ -84,6 +170,11 @@ class File:
     @property
     def data(self):
         return self._data
+
+    @data.setter
+    def data(self, newdata):
+        self._data = newdata
+        self._current_hash = hashlib.md5(self._data.encode('utf-8')).hexdigest()
 
     def __repr__(self):
         return self.name

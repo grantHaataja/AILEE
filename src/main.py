@@ -19,7 +19,7 @@ def main():
         game = Game()
         if game.leave:
             break
-        ailee = game.spawn_agent("Ailee")
+        ailee = game.spawn_agent("ailee")
         comp = factory.mk_computer('ailee', game=game)
 
         if not game.skip_dialog:

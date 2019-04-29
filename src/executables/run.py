@@ -6,8 +6,6 @@ Description: Runs an executable file
 Usage: run file_name.exe
 """
 
-from termcolor import colored
-
 import filesystem
 
 
@@ -21,9 +19,8 @@ def run(*args, **kwargs):
         print("Couldn't find file")
         return
 
-    if (isinstance(obj, filesystem.File)):
+    if isinstance(obj, filesystem.File):
 
-        allowed = False
         if kwargs['user'].name == obj.owner:
             # we're in the owner permissions
             allowed = obj.permissions.exec_owner
@@ -32,6 +29,7 @@ def run(*args, **kwargs):
 
         if not allowed:
             print("Permission denied: file is not executable")
+            return
 
         # verify file hash matches original -- don't allow
         # edited executables to be run

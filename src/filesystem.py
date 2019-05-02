@@ -25,7 +25,12 @@ class Permissions(object):
         return self._bits
 
     def __eq__(self, other):
-        return self._bits == other._bits
+        if isinstance(other, Permissions):
+            return self._bits == other._bits
+        elif isinstance(other, str):
+            return self._bits == other
+        else:
+            return False
 
     def __hash__(self):
         return hash(self._bits)

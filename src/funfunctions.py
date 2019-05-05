@@ -87,11 +87,14 @@ def login(username=None, password=None):
 
 
 def startAilee():
-    print(colored('Administrator: ~/$ \n\033[F', 'green'), end='')
-    sleep(2)
-    print(colored('Administrator: ~/$ ', 'green'), end='')
-    typewriter('AILEE.exe', 'SLOW')
-    sleep(0.5)
+    try:
+        print(colored('Administrator: ~/$ \n\033[F', 'green'), end='')
+        sleep(2)
+        print(colored('Administrator: ~/$ ', 'green'), end='')
+        typewriter('AILEE.exe', 'SLOW')
+        sleep(0.5)
+    except KeyboardInterrupt:
+        startAilee()
 
 
 def passwordRandomizer(password='password', difficulty=0):

@@ -4,39 +4,54 @@
 Description: Lists the current directory's contents, which can be files or other
 directories (keep in mind the current directory may be empty)
 
-Items listed in blue are directories (folder)
-
-Allowed flags:
-
--a: list all files and folders, including hidden ones
--l: "list" format.  Shows more details, including permissions, owner, and size
-
-Allowed usages:
-$ ls
-$ ls -a
-$ ls -l
-$ ls -la
+Items listed in blue are directories (folder) and in green are executable
+files.
 """
 
 from termcolor import colored
+import argparse
 
 import filesystem
 
 # use """list(kwargs['cwd'])""" to get the current working directory's contents
 
+parser = argparse.ArgumentParser(
+    description=__doc__,
+)
+parser.add_argument(
+    '-l',
+    action='store_true',
+    dest='listMode',
+    help='list in long format'
+)
+parser.add_argument(
+    '-a',
+    action='store_true',
+    dest='listAll',
+    help='do not ignore entries starting with .'
+)
+parser.add_argument(
+    'folder',
+    nargs='*',
+    type=str,
+    default='.',
+    help='folder to list.  defaults to current working directory'
+)
+
 
 def run(*args, **kwargs):
-    listAll = False
-    listMode = False
+    args = parser.parse_args(args)
+    listAll = args.listAll
+    listMode = args.listMode
     dirsToSearch = []
-    for arg in args:
-        if arg[0] == '-':
-            if 'a' in arg:
-                listAll = True
-            if 'l' in arg:
-                listMode = True
-        elif '.' not in arg:
-            dirsToSearch += [arg]
+    #for arg in args:
+    #    if arg[0] == '-':
+    ##        if 'a' in arg:
+     #           listAll = True
+     #       if 'l' in arg:
+     #           listMode = True
+     #   elif '.' not in arg:
+     #       dirsToSearch += [arg]
     if len(dirsToSearch) == 0:
         listDir(kwargs['cwd'].children, listAll, listMode)
     else:

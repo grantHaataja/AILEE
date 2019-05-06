@@ -17,6 +17,7 @@ import filesystem
 
 parser = argparse.ArgumentParser(
     description=__doc__,
+    formatter_class=argparse.RawTextHelpFormatter,
 )
 parser.add_argument(
     '-l',
@@ -32,7 +33,7 @@ parser.add_argument(
 )
 parser.add_argument(
     'folder',
-    nargs='*',
+    nargs='?',
     type=str,
     default='.',
     help='folder to list.  defaults to current working directory'
@@ -40,18 +41,13 @@ parser.add_argument(
 
 
 def run(*args, **kwargs):
-    args = parser.parse_args(args)
+    try:
+        args = parser.parse_args(args)
+    except SystemExit as exc:
+        return
     listAll = args.listAll
     listMode = args.listMode
     dirsToSearch = []
-    #for arg in args:
-    #    if arg[0] == '-':
-    ##        if 'a' in arg:
-     #           listAll = True
-     #       if 'l' in arg:
-     #           listMode = True
-     #   elif '.' not in arg:
-     #       dirsToSearch += [arg]
     if len(dirsToSearch) == 0:
         listDir(kwargs['cwd'].children, listAll, listMode)
     else:

@@ -69,7 +69,7 @@ def run(*args, **kwargs):
     if (args[0] in kwargs['game'].allowed_commands) and \
             (args[0] not in executables.BLACKLIST_COMMANDS):
         try:
-            print(getattr(executables, args[0]).__doc__)
+            getattr(executables, args[0]).parser.print_help()
         except AttributeError:
             print("no command {} found".format(args[0]))
     else:

@@ -54,7 +54,7 @@ def run(*args, **kwargs):
             comp.vulns['_ftp_password_crack'][0] = True
             kwargs['shell'].run_command(
                 kwargs['shell']._get_command_from_str('shell'),
-                ['new', addr],
+                ['-n', addr],
                 cred_login=True,
             )
             kwargs['shell'].run_command(

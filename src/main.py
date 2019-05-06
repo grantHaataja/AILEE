@@ -6,6 +6,7 @@ Run the game
 from game import Game
 from MainMenuException import MainMenuException
 import funfunctions
+import traceback, sys
 
 from funfunctions import clear
 import time

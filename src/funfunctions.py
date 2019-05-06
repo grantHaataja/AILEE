@@ -13,6 +13,7 @@ import os
 import platform
 
 
+# TODO: verify used somewhere (was for password db)
 class TwoWayDictionary(dict):
 
     def __setitem__(self, key, val):

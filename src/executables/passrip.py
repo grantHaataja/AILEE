@@ -12,13 +12,32 @@ Usage: passrip 286755fad04869ca523320acce0dc6a4
 """
 
 import random
+import argparse
 
 import funfunctions
 
 
+parser = argparse.ArgumentParser(
+    prog='passrip',
+    description=__doc__,
+    formatter_class=argparse.RawTextHelpFormatter,
+)
+parser.add_argument(
+    'newhash',
+    nargs='?',
+    default=None,
+    help='new (md5) hash to crack',
+)
+
+
 def run(*args, **kwargs):
 
-    if len(args) == 0:
+    try:
+        data = parser.parse_args(args)
+    except SystemExit:
+        return
+
+    if data.newhash is None:
         print("                 Already known passwords:           \n")
         print("            Hash (MD5)                 Plaintext    ")
         print("-------------------------------- -------------------")
@@ -29,7 +48,7 @@ def run(*args, **kwargs):
                 else:
                     print(hash)
 
-    if len(args) == 1:
+    else:
 
         dt = random.random()
         ndots = random.randint(10, 15)
@@ -37,7 +56,7 @@ def run(*args, **kwargs):
 
         hashes = kwargs['game'].pw_database
         for hash, pwd in hashes.items():
-            if hash == args[0]:
+            if hash == data.newhash:
                 print("Password: {}".format(pwd[0]))
                 pwd[1] = True
                 return

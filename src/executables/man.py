@@ -4,10 +4,10 @@
 
 Description: Shows the manual page for any command to describe its usage
 
-Usage: man command_name
-
-Usage: man (for all you manly men out there)
+Alternate usage: man (for all you manly men out there)
 """
+
+import argparse
 
 import executables
 
@@ -51,26 +51,38 @@ VITRUVIAN = """
 """
 
 
+parser = argparse.ArgumentParser(
+    prog='man',
+    description=__doc__,
+    formatter_class=argparse.RawTextHelpFormatter,
+)
+parser.add_argument(
+    'command',
+    nargs='?',
+    default=None,
+    help='command to look up'
+)
+
+
 def run(*args, **kwargs):
     """
     Lookup man pages for a command.
     """
-    emptyList = True
-    for arg in args:
-        if arg:
-            emptyList = False
-    assert len(args) in [0, 1] or emptyList, \
-        "Invalid use of man.\n\nUsage: man [command]"
 
-    if len(args) == 0 or emptyList:
+    try:
+        data = parser.parse_args(args)
+    except SystemExit:
+        return
+
+    if data.command is None:
         print(VITRUVIAN)
         return
 
-    if (args[0] in kwargs['game'].allowed_commands) and \
-            (args[0] not in executables.BLACKLIST_COMMANDS):
+    if (data.command in kwargs['game'].allowed_commands) and \
+            (data.command not in executables.BLACKLIST_COMMANDS):
         try:
-            getattr(executables, args[0]).parser.print_help()
+            getattr(executables, data.command).parser.print_help()
         except AttributeError:
-            print("no command {} found".format(args[0]))
+            print("no command {} found".format(data.command))
     else:
         print("command not found")

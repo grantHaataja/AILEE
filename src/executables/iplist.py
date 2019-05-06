@@ -3,12 +3,11 @@
 
 Description: Lists the IP-addresses of all computers on the network available\nto AILEE
 
-Option -a (Add): Using an email address, attempt to access the\ncorresponding IP-address and add it to the list of available IP-addresses
-
-Usage: iplist (displays list of all known IP-addresses)
-
-Usage: iplist -a emailaddress@example.com (adds IP address associated with email)
+Option -a (Add): Using an email address, attempt to access the
+corresponding IP-address and add it to the list of available IP-addresses
 '''
+
+import argparse
 
 from computers import factory
 
@@ -20,21 +19,35 @@ COMPS = {
 }
 
 
-def run(*args, **kwargs):
-    emptyList = True
-    for arg in args:
-        if arg:
-            emptyList = False
-    assert len(args) == 0 or emptyList or (len(args) == 2 and args[0] == '-a'), \
-        "Invalid use of iplist. See man page for details"
+parser = argparse.ArgumentParser(
+    prog='iplist',
+    description=__doc__,
+    formatter_class=argparse.RawTextHelpFormatter,
+)
+parser.add_argument(
+    '-a',
+    nargs='?',
+    type=str,
+    dest='email',
+    default=None,
+    help="lookup an email's IP address",
+)
 
+
+def run(*args, **kwargs):
+    try:
+        data = parser.parse_args(args)
+    except SystemExit:
+        return
+
+    email = data.email
     game = kwargs['game']
     network = game.network
-    if len(args) != 0:
-        if args[1] in COMPS:
-            factory.mk_computer(COMPS[args[1]], **kwargs)
+    if email is not None:
+        if email in COMPS:
+            factory.mk_computer(COMPS[email], **kwargs)
         else:
-            print("Unable to find address associated with {}".format(args[1]))
+            print("Unable to find address associated with {}".format(email))
             return
 
     # Print out available IP addresses

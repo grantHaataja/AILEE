@@ -1,26 +1,38 @@
 """
 "For The People!"
 
-Description: File Transfer Protocol. Implements a file-sharing network between 2 computers by\nallowing them to connect to each other. Secured to only allow access from saved\nusername/password combinations.
-
-Usage: ftp xxx.xxx.xxx.xxx
+Description: File Transfer Protocol. Implements a file-sharing network between 2
+computers by allowing them to connect to each other. Secured to only allow access
+from saved username/password combinations.
 
 """
 
-import funfunctions
+import argparse
 from termcolor import colored
+
+import funfunctions
+
+
+parser = argparse.ArgumentParser(
+    prog='ftp',
+    description=__doc__,
+    formatter_class=argparse.RawTextHelpFormatter,
+)
+parser.add_argument(
+    'ipaddr',
+    type=str,
+    help='IP address of the host'
+)
 
 
 def run(*args, **kwargs):
-    emptyList = True
-    for arg in args:
-        if arg:
-            emptyList = False
-    assert len(args) != 0 and not emptyList, \
-        "You must include an IP address to target"
-    assert len(args) == 1, "Invalid use of ftp.\n\nUsage: ftp [ip_address]"
 
-    addr = args[0]
+    try:
+        data = parser.parse_args(args)
+    except SystemExit:
+        return
+
+    addr = data.ipaddr
     try:
         comp = kwargs['game'].network[addr]
     except KeyError:

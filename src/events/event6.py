@@ -51,7 +51,7 @@ def run(*args, **kwargs):
     # Create virus in AILEE's directory
     comp = kwargs['game'].network['127.0.0.1']
     filename = '.virus'
-    eventname = 'messages05b.txt'
+    eventname = 'message05b.txt'
     a = filename not in comp.fs
     b = getattr(kwargs['game'], '.virus', True)
     c = eventname not in game.eventLogDir

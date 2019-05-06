@@ -16,6 +16,7 @@ import filesystem
 # use """list(kwargs['cwd'])""" to get the current working directory's contents
 
 parser = argparse.ArgumentParser(
+    prog='ls',
     description=__doc__,
     formatter_class=argparse.RawTextHelpFormatter,
 )
@@ -42,11 +43,11 @@ parser.add_argument(
 
 def run(*args, **kwargs):
     try:
-        args = parser.parse_args(args)
+        data = parser.parse_args(args)
     except SystemExit as exc:
         return
-    listAll = args.listAll
-    listMode = args.listMode
+    listAll = data.listAll
+    listMode = data.listMode
     dirsToSearch = []
     if len(dirsToSearch) == 0:
         listDir(kwargs['cwd'].children, listAll, listMode)

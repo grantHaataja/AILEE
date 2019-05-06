@@ -3,19 +3,33 @@
 
 Description: Vulnerability Scan. Use against an IP address to detect system
 vulnerabilities
-
-Usage: vscan xxx.xxx.xxx.xxx
 """
+
+import argparse
 
 from funfunctions import dots
 
 
-def run(*args, **kwargs):
-    assert len(args) == 1, \
-        "You must specify a valid IP address\n\nUsage: vscan [ip_address]"
+parser = argparse.ArgumentParser(
+    prog='vscan',
+    description=__doc__,
+    formatter_class=argparse.RawTextHelpFormatter,
+)
+parser.add_argument(
+    'addr',
+    type=str,
+    help='host to scan for vulnerabilities'
+)
 
-    if args[0] not in kwargs['game'].network:
-        print("Couldn't find computer {}".format(args[0]))
+
+def run(*args, **kwargs):
+    try:
+        data = parser.parse_args(args)
+    except SystemExit:
+        return
+
+    if data.addr not in kwargs['game'].network:
+        print("Couldn't find computer {}".format(data.addr))
         return
 
     print('Beginning deep vulnerability scan')
@@ -24,7 +38,7 @@ def run(*args, **kwargs):
     # need to change this so there are 2-3 possibilities that will execute based on
     # which IP address is entered
 
-    vulns = kwargs['game'].network[args[0]].vulns
+    vulns = kwargs['game'].network[data.addr].vulns
     if len(vulns.keys()) == 0:
         print("No vulnerabilities found")
     else:

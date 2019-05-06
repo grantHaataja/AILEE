@@ -1,17 +1,35 @@
 """
 "Better than looking at cat pics"
 
-Description: Prints contents of a file to the terminal screen
-
-Usage: read file_name.txt
+Description: Prints contents of a file to the terminal screen.  If any MD5
+hashes are found, add them to the passrip command and also look for
+anything that might be the plaintext of that hash.
 """
 
 import re
+import argparse
 
 import filesystem
 
 # https://stackoverflow.com/a/373207.  Thanks, @Mark Novakowski!
 MD5_REGEX = r"([a-f0-9]{32})"
+
+parser = argparse.ArgumentParser(
+    prog='read',
+    description=__doc__,
+    formatter_class=argparse.RawTextHelpFormatter,
+)
+parser.add_argument(
+    'filename',
+    type=str,
+    help='the file to read'
+)
+parser.add_argument(
+    '-n',
+    action='store_false',
+    dest='doSearchHashes',
+    help='disable automatic hash searching'
+)
 
 
 def deal_with_hashes(content, game):
@@ -35,10 +53,14 @@ def deal_with_hashes(content, game):
 
 
 def run(*args, **kwargs):
-    assert len(args) == 1, "Must specify a file to read.\n\nUsage: read [filename]"
 
     try:
-        obj = kwargs['cwd'].children[args[0]]
+        data = parser.parse_args(args)
+    except SystemExit:
+        return
+
+    try:
+        obj = kwargs['cwd'].children[data.filename]
     except KeyError:
         print("couldn't file file")
         return
@@ -51,7 +73,8 @@ def run(*args, **kwargs):
 
         if allowed:
             print(obj.data)
-            deal_with_hashes(obj.data, kwargs['game'])
+            if data.doSearchHashes:
+                deal_with_hashes(obj.data, kwargs['game'])
         else:
             print("Unable to read file")
     else:

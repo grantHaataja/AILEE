@@ -1,24 +1,48 @@
 """
 "Sally sells these by the seashore"
 
-Description: Basically, a shell is the running process behind a terminal window.\nYou are reading this on a shell right now. This command shows what shells are\nopen on which computers and allows the user to switch between them
-
-Usage: shell (shows all open shells and which computer they belong to)
-
-Usage: shell x (switches to shell number x to access the computer shell number x\nis open on)
+Description: Basically, a shell is the running process behind a terminal window.
+You are reading this on a shell right now. This command shows what shells are
+open on which computers and allows the user to switch between them
 """
 
+import argparse
+
+parser = argparse.ArgumentParser(
+    prog='shell',
+    description=__doc__,
+    formatter_class=argparse.RawTextHelpFormatter,
+)
+group = parser.add_mutually_exclusive_group(
+    required=False,
+)
+group.add_argument(
+    'switch_to',
+    nargs='?',
+    type=str,
+    default=None,
+    help='shell number to switch to',
+)
+group.add_argument(
+    '-n',
+    nargs='?',
+    type=str,
+    dest='mknew',
+    const='-1',
+    help='create a new shell on this (or other) computer, specified by IP'
+)
 
 def run(*args, **kwargs):
-    emptyList = True
-    for arg in args:
-        if arg:
-            emptyList = False
+
+    try:
+        data = parser.parse_args(args)
+    except SystemExit:
+        return
 
     agent = kwargs['agent']
     shells = agent.shells
 
-    if not args or emptyList:
+    if not (data.switch_to or data.mknew):
         # list available shells
         print("===== SHELLS =====")
         print("Hello, {}.".format(agent.name))
@@ -30,22 +54,22 @@ def run(*args, **kwargs):
         print("==================")
 
     else:
-        if args[0] == "new":
+        if data.mknew:
             # making a new shell
             # We either have just
             #   $ shell new
             # or $ shell new {IP address}
 
-            if len(args) == 2:
+            if data.mknew != '-1':
                 try:
-                    box = kwargs['game'].network[args[1]]
+                    box = kwargs['game'].network[data.mknew]
                 except KeyError:
                     print("Couldn't connect to {}.".format(args[1]))
                     return
-            elif len(args) == 1:
+            elif data.mknew == '-1':
                 box = kwargs['computer']  # this one
             else:
-                print("What's going on here? args = {}".format(args))
+                print("What's going on here? args = {}".format(data))
                 return
 
             vulnerable = any(box.vulns.values())
@@ -61,9 +85,8 @@ def run(*args, **kwargs):
             else:
                 print("Couldn't create a new shell on that machine.")
         else:
-            assert len(args) == 1, "expected only 1 argument"
             try:
-                selection = int(args[0])
+                selection = int(data.switch_to)
             except ValueError:
                 print("must specify an int")
                 return

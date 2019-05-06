@@ -3,31 +3,45 @@
 
 Description: Shut the computer down
 
-DISCLAIMER: It is a known issue that if shutdown, AILEE will lose all memory, and\nthe entire training process will have to be redone
-
-Usage: shutdown
+DISCLAIMER: It is a known issue that if shutdown, AILEE will lose all memory, and
+the entire training process will have to be redone.
 """
+
+import argparse
 
 from MainMenuException import MainMenuException
 from funfunctions import dots
 
 
+parser = argparse.ArgumentParser(
+    prog='shutdown',
+    description=__doc__,
+    formatter_class=argparse.RawTextHelpFormatter,
+)
+parser.add_argument(
+    'when',
+    type=str,
+    default='5',
+    nargs='?',
+    help='time until shutdown (seconds) or "now"',
+)
+
+
 def run(*args, **kwargs):
-    emptyList = True
-    for arg in args:
-        if arg:
-            emptyList = False
-    assert len(args) in [0, 1] or emptyList, \
-        "Invalid use of shutdown.\n\nUsage: shutdown"
-    seconds = 5
-    if args:
-        if args[0] == 'now':
+    try:
+        data = parser.parse_args(args)
+    except SystemExit:
+        return
+
+    try:
+        seconds = int(data.when)
+    except ValueError as e:
+        if data.when == 'now':
             seconds = 0
         else:
-            try:
-                seconds = int(args[0])
-            except ValueError:
-                seconds = 5
+            print("Invalid time specification")
+            return
+
     _shutdown(seconds)
 
 

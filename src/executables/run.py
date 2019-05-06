@@ -2,19 +2,34 @@
 "Run, run, as fast as you can. You can't catch me, I'm the gingerbread man!"
 
 Description: Runs an executable file
-
-Usage: run file_name.exe
 """
+
+import argparse
 
 import filesystem
 
 
+parser = argparse.ArgumentParser(
+    prog='run',
+    description=__doc__,
+    formatter_class=argparse.RawTextHelpFormatter,
+)
+parser.add_argument(
+    'filename',
+    type=str,
+    help='file to run',
+)
+
+
 def run(*args, **kwargs):
-    assert len(args) == 1, \
-        "Must specify an executable to run.\n\nUsage: run [executable]"
 
     try:
-        obj = kwargs['cwd'].children[args[0]]
+        data = parser.parse_args(args)
+    except SystemExit:
+        return
+
+    try:
+        obj = kwargs['cwd'].children[data.filename]
     except KeyError:
         print("Couldn't find file")
         return

@@ -101,7 +101,7 @@ class Shell(object):
             USER=self.user),
         )
 
-        parts = [p.strip() for p in user_input.split(' ')]
+        parts = [p.strip() for p in user_input.strip().split(' ')]
         command = parts[0]
         args = parts[1:]
 

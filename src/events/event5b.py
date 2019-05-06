@@ -2,8 +2,9 @@
 # triggers after Ailee reads .notes.txt
 
 import time
-from funfunctions import typewriter
 from termcolor import colored
+
+from funfunctions import typewriter
 
 
 def check_run(*args, **kwargs):

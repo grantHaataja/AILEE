@@ -1,0 +1,1 @@
+print("Segmentation fault (core dumped)")

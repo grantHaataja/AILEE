@@ -2,13 +2,24 @@
 """
 "Determine if another computer wants to play pingpong"
 
-Description: Tells if a computer is connected to the internet
-
-Usage: ping xxx.xxx.xxx.xxx
+Check if a computer is connected to the internet.
 """
 
 import random
 import time
+import argparse
+
+
+parser = argparse.ArgumentParser(
+    prog='ping',
+    description=__doc__,
+    formatter_class=argparse.RawTextHelpFormatter,
+)
+parser.add_argument(
+    'addr',
+    type=str,
+    help='host to test',
+)
 
 
 def run(*args, **kwargs):
@@ -16,14 +27,18 @@ def run(*args, **kwargs):
     Ping.
     """
 
-    assert len(args) == 1, "Need an address to play pingpong with"
+    try:
+        data = parser.parse_args(args)
+    except SystemExit:
+        return
+
     # Network is a dictionary. ip_address(str):computer(obj)
     # That does make more sense
     comps = kwargs['game'].network
-    if args[0] in comps.keys():
-        success(args[0])
+    if data.addr in comps.keys():
+        success(data.addr)
     else:
-        fail(args[0])
+        fail(data.addr)
 
 
 def success(addr):

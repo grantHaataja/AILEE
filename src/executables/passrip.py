@@ -1,24 +1,63 @@
 """
 "Open sesame"
 
-Description: Cracks the hash of a password to reveal the original value (hashes\nare secured passwords that look something like this: 286755fad04869ca523320acce0dc6a4)
+Description: Cracks the hash of a password to reveal the original value (hashes
+are secured passwords that look something like this:
+286755fad04869ca523320acce0dc6a4)
+
+With no arguments, prints a list of all currently known passwords (already
+cracked).
 
 Usage: passrip 286755fad04869ca523320acce0dc6a4
 """
 
-import random, funfunctions
+import random
+import argparse
+
+import funfunctions
+
+
+parser = argparse.ArgumentParser(
+    prog='passrip',
+    description=__doc__,
+    formatter_class=argparse.RawTextHelpFormatter,
+)
+parser.add_argument(
+    'newhash',
+    nargs='?',
+    default=None,
+    help='new (md5) hash to crack',
+)
 
 
 def run(*args, **kwargs):
-    assert len(args) == 1, "Invalid use of passrip.\n\nUsage: passrip [hash]"
 
-    dt = random.random()
-    ndots = random.randint(10, 15)
-    funfunctions.dots("Cracking", ndots, dt)
+    try:
+        data = parser.parse_args(args)
+    except SystemExit:
+        return
 
-    if args[0] == '3e7d9b3ad13837e0c0d370c9d348b3e3':
-        print("Password: %tL8wn@mI0")
-    elif args[0] == '286755fad04869ca523320acce0dc6a4':
-        print("Password: password")
+    if data.newhash is None:
+        print("                 Already known passwords:           \n")
+        print("            Hash (MD5)                 Plaintext    ")
+        print("-------------------------------- -------------------")
+        for hash, pwd in kwargs['game'].pw_database.items():
+            if pwd[2]:
+                if pwd[1]:
+                    print("{}:{}".format(hash, pwd[0]))
+                else:
+                    print(hash)
+
     else:
-        print("Unable to determine password.")
+
+        dt = random.random()
+        ndots = random.randint(10, 15)
+        funfunctions.dots("Cracking", ndots, dt)
+
+        hashes = kwargs['game'].pw_database
+        for hash, pwd in hashes.items():
+            if hash == data.newhash:
+                print("Password: {}".format(pwd[0]))
+                pwd[1] = True
+                return
+        print("Unable to determine password")

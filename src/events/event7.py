@@ -2,8 +2,9 @@
 # triggers after man pages on the new commands have been run
 
 import time
-from funfunctions import typewriter
 from termcolor import colored
+
+from funfunctions import typewriter
 
 
 def check_run(*args, **kwargs):

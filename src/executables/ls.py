@@ -1,48 +1,99 @@
 """
 "Love Story"
 
-Description: Lists the current directory's contents, which can be files or other\ndirectories (keep in mind the current directory may be empty)
+Description: Lists the current directory's contents, which can be files or other
+directories (keep in mind the current directory may be empty)
 
-Items listed in blue are directories (folder)
-
-Option -la (long list all): Lists the current directory's contents in long list\nformat
-
-Usage: ls
-
-Usage: ls -la (for long list format)
+Items listed in blue are directories (folder) and in green are executable
+files.
 """
 
 from termcolor import colored
+import argparse
+
+import filesystem
 
 # use """list(kwargs['cwd'])""" to get the current working directory's contents
 
+parser = argparse.ArgumentParser(
+    prog='ls',
+    description=__doc__,
+    formatter_class=argparse.RawTextHelpFormatter,
+)
+parser.add_argument(
+    '-l',
+    action='store_true',
+    dest='listMode',
+    help='list in long format'
+)
+parser.add_argument(
+    '-a',
+    action='store_true',
+    dest='listAll',
+    help='do not ignore entries starting with .'
+)
+parser.add_argument(
+    'folder',
+    nargs='?',
+    type=str,
+    default='.',
+    help='folder to list.  defaults to current working directory'
+)
+
 
 def run(*args, **kwargs):
-    listAll = False
-    listMode = False
+    try:
+        data = parser.parse_args(args)
+    except SystemExit as exc:
+        return
+    listAll = data.listAll
+    listMode = data.listMode
     dirsToSearch = []
-    for arg in args:
-        if arg[0] == '-':
-            if 'a' in arg:
-                listAll = True
-            if 'l' in arg:
-                listMode = True
-        elif '.' not in arg:
-            dirsToSearch += [arg]
     if len(dirsToSearch) == 0:
-        listDir(list(kwargs['cwd']), listAll, listMode)
+        listDir(kwargs['cwd'].children, listAll, listMode)
     else:
         print('Invalid use of ls. See manual page for details')
 
 
 def listDir(contents, listAll, listMode):
+
     if not listAll:
-        contents = [x for x in contents if x[0] != '.']
-    for item in contents:
-        if '.' not in item:
-            item = colored(item, 'blue', None, ['bold'])
-        elif len(item) > 4 and item[::-1][0:4] == 'exe.':
-            item = colored(item, 'green', None, ['bold'])
-        print(item, end=('\n' if listMode else '     '))
-    if not listMode and contents:
-        print()
+        dolist = [x for x in contents.keys() if x[0] != '.']
+    else:
+        dolist = list(contents.keys())
+
+    output = []
+
+    for name in dolist:
+        obj = contents[name]
+        out = name
+
+        if isinstance(obj, filesystem.Directory):
+            out = colored(name, 'blue', None, ['bold'])
+        elif 'x' in obj.permissions:
+            out = colored(name, 'green', None, ['bold'])
+
+        output.append(out)
+
+    maxnamelen = max([len(s) for s in output]) + 4
+    maxownerlen = max([len(contents[s].owner) for s in dolist])
+    maxsize = max(len(str(len(contents[s]))) for s in dolist)
+    final_output = ""
+
+    for i in range(len(output)):
+        obj = contents[dolist[i]]
+        out = output[i]
+        ptype = 'd' if isinstance(obj, filesystem.Directory) else '-'
+        if listMode:
+            out = f"{ptype}{obj.permissions} {obj.owner:<{maxownerlen}} {len(obj):>{maxsize}} {out}\n"
+        else:
+            out = f"{out:<{maxnamelen}}"
+
+        final_output += out
+
+    # in listMode, the trailing newline on the end of the format string takes
+    # care of the necessary last newline
+    if listMode:
+        print(final_output, end='')
+    else:
+        print(final_output)

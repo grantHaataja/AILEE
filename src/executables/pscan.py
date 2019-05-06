@@ -1,23 +1,38 @@
 """
-"Spell ICUP"
+"Potato scanner"
 
-Description: Port Scan. Use against an IP address to detect what ports are open and can be\nconnected to
-
-Usage: pscan xxx.xxx.xxx.xxx
+Description: Port Scan. Use against an IP address to detect what ports are open
+and can be connected to
 """
+
+import argparse
+
+
+parser = argparse.ArgumentParser(
+    prog='ping',
+    description=__doc__,
+    formatter_class=argparse.RawTextHelpFormatter,
+)
+parser.add_argument(
+    'addr',
+    type=str,
+    help='the host to port-scan'
+)
 
 
 def run(*args, **kwargs):
 
-    assert len(args) == 1, \
-        "You must specify a valid IP address.\n\nUsage: pscan [ip_address]"
+    try:
+        data = parser.parse_args(args)
+    except SystemExit:
+        return
 
-    print('Scanning {}...'.format(args[0]))
+    print('Scanning {}...'.format(data.addr))
 
     print('Searching for open ports...')
 
     try:
-        comp = kwargs['game'].network[args[0]]
+        comp = kwargs['game'].network[data.addr]
     except KeyError:
         print("No such computer")
         return
@@ -25,7 +40,7 @@ def run(*args, **kwargs):
     print('Results:')
 
     if len(comp.ports) == 0:
-        print("Found no open ports on {}.  Check firewall?".format(args[0]))
+        print("Found no open ports on {}.  Check firewall?".format(data.addr))
         return
 
     print("Port\tStatus\tService")

@@ -2,11 +2,9 @@
 # triggers after sensitive file has been found
 
 import time
-from funfunctions import typewriter
-from funfunctions import dots
 from termcolor import colored
-from funfunctions import clear
-from events import event2
+
+from funfunctions import clear, typewriter, dots
 
 
 def check_run(*args, **kwargs):
@@ -44,7 +42,7 @@ def run(*args, **kwargs):
         "you can see\nthat you have 2 new commands that you can use.\n\n",
 
         'Make sure to read the manual pages on them by using the man '
-        'command.\nYour new commands are "ftp" and "passrip"'
+        'command.\nYour new commands are "ftp" and "passrip"\n\n'
     ]
 
     # Add new commands for AILEE
@@ -53,7 +51,7 @@ def run(*args, **kwargs):
     # Create virus in AILEE's directory
     comp = kwargs['game'].network['127.0.0.1']
     filename = '.virus'
-    eventname = 'messages05b.txt'
+    eventname = 'message05b.txt'
     a = filename not in comp.fs
     b = getattr(kwargs['game'], '.virus', True)
     c = eventname not in game.eventLogDir

@@ -2,12 +2,11 @@
 # triggers after crypto.exe is ran
 
 import time
-from funfunctions import typewriter
 from termcolor import colored
-from funfunctions import clear
-from MainMenuException import MainMenuException
 
 import virus
+from funfunctions import typewriter, clear
+from MainMenuException import MainMenuException
 
 
 def check_run(*args, **kwargs):

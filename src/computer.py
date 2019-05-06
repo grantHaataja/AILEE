@@ -14,12 +14,12 @@ class Computer(object):
         """
         Put lightning into the math rock.
         """
-
         self.name = name
         self.fs = filesystem.Directory()
         self.game = kwargs.get('game', None)
-        self.ports = getattr(kwargs, 'ports', {})
-        self.users = getattr(kwargs, 'users', {})
+        self.ports = kwargs.get('ports', {})
+        self.users = kwargs.get('users', {})
+        self.vulns = kwargs.get('vulns', {})
 
     def get_shell(self, user, agent=None):
         """
@@ -35,7 +35,10 @@ class Computer(object):
                 self.ports.update({port_no: service})
 
     def add_user(self, username):
-        self.users.update({username:User(username)})
+        self.users.update({username: User(username, game=self.game)})
+
+    def add_prebuilt_user(self, user):
+        self.users.update({user.name: user})
 
     def get_user(self, username):
         try:
@@ -54,20 +57,22 @@ class Computer(object):
 
     def __repr__(self):
         return self.name
-    __str__ = __repr__ # set __str__ as the same method as __repr__
+    __str__ = __repr__  # set __str__ as the same method as __repr__
 
 
 class User:
-    '''
+    """
     User Account for a computer
-    '''
-    def __init__(self, name, password=None):
+    """
+    def __init__(self, name, password=None, game=None):
         self.name = name
         self.password = password or funfunctions.passwordRandomizer()
+        if game is not None:
+            game.add_pwd(self.password)
 
     def changePassword(self, password):
         self.password = password
 
     def __repr__(self):
         return self.name
-    __str__ = __repr__ # set __str__ as the same method as __repr__
+    __str__ = __repr__  # set __str__ as the same method as __repr__

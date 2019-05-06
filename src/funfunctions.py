@@ -9,7 +9,20 @@ import random
 import secrets
 import sys
 import curses
-import os, platform
+import os
+import platform
+
+
+# TODO: verify used somewhere (was for password db)
+class TwoWayDictionary(dict):
+
+    def __setitem__(self, key, val):
+        dict.__setitem__(self, key, val)
+        dict.__setitem__(self, val, key)
+
+    def __delitem__(self, key):
+        dict.__delitem__(self, self[key])
+        dict.__delitem__(self, key)
 
 
 def clear():
@@ -17,6 +30,8 @@ def clear():
         cls = lambda: os.system('clear')
     elif platform.system() == 'Windows':
         cls = lambda: os.system('cls')
+    else:
+        cls = lambda: os.system('clear')
     cls()
 
 
@@ -51,45 +66,54 @@ def dots(text, n_dots, delay):
 
 
 def login(username=None, password=None):
-    print(colored('Username: \nPassword: \033[F\033[F', 'green'), end='')
-    if username is not None:
-        print(colored("Username: ", 'green'), end='')
-        sleep(0.5)
-        typewriter(username + '\n', 'SLOW')
-    else:
-        username = input(colored('Username: ', 'green'))
+    try:
+        print(colored('Username: \nPassword: \033[F\033[F', 'green'), end='')
+        if username is not None:
+            print(colored("Username: ", 'green'), end='')
+            sleep(0.5)
+            typewriter(username + '\n', 'SLOW')
+        else:
+            username = input(colored('Username: ', 'green'))
 
-    if password is not None:
-        print(colored("Password: ", 'green'), end='')
-        sleep(0.5)
-        typewriter(('*' * len(password)) + '\n', 'SLOW')
-    else:
-        password = getpass()
+        if password is not None:
+            print(colored("Password: ", 'green'), end='')
+            sleep(0.5)
+            typewriter(('*' * len(password)) + '\n', 'SLOW')
+        else:
+            password = getpass()
 
-    return username, password
+        return username, password
+    except KeyboardInterrupt:
+        return login(username, password)
 
 
 def startAilee():
-    print(colored('Administrator: ~/$ \n\033[F', 'green'), end='')
-    sleep(2)
-    print(colored('Administrator: ~/$ ', 'green'), end='')
-    typewriter('AILEE.exe', 'SLOW')
-    sleep(0.5)
+    try:
+        print(colored('Administrator: ~/$ \n\033[F', 'green'), end='')
+        sleep(2)
+        print(colored('Administrator: ~/$ ', 'green'), end='')
+        typewriter('AILEE.exe', 'SLOW')
+        sleep(0.5)
+    except KeyboardInterrupt:
+        startAilee()
 
 
 def passwordRandomizer(password='password', difficulty=0):
     """
       Auto-generates a password and returns it, based on a difficulty provided.
 
-      Default difficulty is 0, and generates a password in the form of "password" but with random letters replaced with symbols and a random number of iterative numbers following. (ex: Pa5sw0rD1234)
+      Default difficulty is 0, and generates a password in the form of "password"
+      but with random letters replaced with symbols and a random number of
+      iterative numbers following. (ex: Pa5sw0rD1234)
 
-      For any other difficulty specified, returns a password of length $difficulty using random tokens from the secrets module.
+      For any other difficulty specified, returns a password of length $difficulty
+      using random tokens from the secrets module.
     """
     if difficulty == 0:
         password = list(password)
         i = 0
         while i < len(password):
-            if random.randint(0,3) == 0:
+            if random.randint(0, 3) == 0:
                 password[i] = replaceToken(password[i])
             i += 1
         newPassword = ''
@@ -105,19 +129,9 @@ def replaceToken(token):
     """
     This-for-that function to replace letters in a password with harder to crack variants
     """
-    if token == 'p':
-        return 'P'
-    elif token == 'a':
-        return '@'
-    elif token == 's':
-        return '5'
-    elif token == 'w':
-        return 'W'
-    elif token == 'o':
-        return '0'
-    elif token == 'r':
-        return 'R'
-    elif token == 'd':
-        return 'D'
-    else:
-        return token
+    mapping = {
+        'p': 'P', 'a': '@', 'A': '4', 'B': '8', 's': '5', 'w': 'W',
+        'o': '0', 'r': 'R', 'd': 'D', 'H': '#', 'W': 'VV', 'V': '\\/',
+        'I': '1', '1': 'I', 'S': '$',
+    }
+    return mapping.get(token, token)

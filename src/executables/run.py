@@ -2,45 +2,58 @@
 "Run, run, as fast as you can. You can't catch me, I'm the gingerbread man!"
 
 Description: Runs an executable file
-
-Usage: run file_name.exe
 """
 
-from termcolor import colored
+import argparse
+
+import filesystem
 
 
-def forkbomb():
-    pass
+parser = argparse.ArgumentParser(
+    prog='run',
+    description=__doc__,
+    formatter_class=argparse.RawTextHelpFormatter,
+)
+parser.add_argument(
+    'filename',
+    type=str,
+    help='file to run',
+)
 
 
 def run(*args, **kwargs):
-    assert len(args) == 1, \
-        "Must specify an executable to run.\n\nUsage: run [executable]"
 
-    if args[0].split('.')[-1] != 'exe':
-        print("Unable to run file, must be .exe")
+    try:
+        data = parser.parse_args(args)
+    except SystemExit:
         return
 
-    if args[0] == 'crypto.exe':
-        if ((kwargs['computer'].name == 'ccc') and \
-                ('crypto.exe' in kwargs['cwd'].children)):
+    try:
+        obj = kwargs['cwd'].children[data.filename]
+    except KeyError:
+        print("Couldn't find file")
+        return
 
-            pwd = input("Enter master password > ")
-            if pwd == "%tL8wn@mI0":
-                kwargs['game'].event10 = True
-            else:
-                print(colored("Access denied", "red"))
+    if isinstance(obj, filesystem.File):
 
-    if args[0] == 'a.exe':
-        if 'a.exe' in kwargs['cwd'].children:
-            print("Segmentation fault (core dumped)")
+        if kwargs['user'].name == obj.owner:
+            # we're in the owner permissions
+            allowed = obj.permissions.exec_owner
+        else:
+            allowed = obj.permissions.exec_users
 
-    if args[0] == 'runme.exe':
-        if 'runme.exe' in kwargs['cwd'].children:
-            if 'event5!' in kwargs['game'].events_run:
-                kwargs['game'].events_run.remove('event5!')
-            kwargs['game'].forkbomb = True
+        if not allowed:
+            print("Permission denied: file is not executable")
+            return
 
-    if args[0] == 'executable.exe':
-        if 'executable.exe' in kwargs['cwd'].children:
-            print('I am an executable file! You just ran me.')
+        # verify file hash matches original -- don't allow
+        # edited executables to be run
+        if obj.original_hash != obj.current_hash:
+            print("Cannot run modified files.")
+            return
+
+        code = obj.data
+
+        # TODO: there has to be a better way than this
+        exec(code)
+        return

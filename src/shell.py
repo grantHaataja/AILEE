@@ -4,7 +4,9 @@ from termcolor import colored
 import funfunctions
 
 import time
-import traceback, sys, random
+import traceback
+import sys
+import random
 
 import executables
 import events
@@ -13,7 +15,12 @@ from MainMenuException import MainMenuException
 DEFAULT_PROMPT = colored("AILEE@{COMP}: {CWD}$ ", 'green')
 
 CMD_NOT_FOUND_STRS = [
-    "command not found"
+    "command not found",
+    "Nope, don't know that one",
+    "This isn't Google",
+    "NOOB!"
+    "Segmentation fault (core dumped)",
+
 ]
 
 
@@ -69,7 +76,7 @@ class Shell(object):
         cmd = self._command_dictionary[command_str]
         return cmd
 
-    def run_command(self, command, args):
+    def run_command(self, command, args, **kwargs):
         """
         Runs a command.
 
@@ -84,6 +91,7 @@ class Shell(object):
             agent=self.agent,
             shell=self,
             game=self.game,
+            **kwargs
         )
 
     def take_input(self):
@@ -93,7 +101,7 @@ class Shell(object):
             USER=self.user),
         )
 
-        parts = [p.strip() for p in user_input.split(' ')]
+        parts = [p.strip() for p in user_input.strip().split(' ')]
         command = parts[0]
         args = parts[1:]
 
@@ -128,25 +136,21 @@ class Shell(object):
     def start_shell_loop(self):
         self.running = True
         while self.running:
-
-            # This is the line of code that integrates the story VVV
-
-
             try:
                 self.run_command(events.doStory.run, [])
                 self.one_command()
             except KeyboardInterrupt:
                 print()
-            except KeyError as e:
-                self.cmd_not_found()
+            #except KeyError as e:
+            #    self.cmd_not_found()
             except AssertionError as e:
                 print(str(e))
             except MainMenuException:
                 raise MainMenuException
             except Exception as e:
-                print(colored(
-                    "Something went wrong.  I'm not quite sure what.  "
-                    "Maybe try again?", 'red'))
+                #print(colored(
+                #    "Something went wrong.  I'm not quite sure what.  "
+                #    "Maybe try again?", 'red'))
                 # Uncomment VV for full tracebacks
-                #einfo = sys.exc_info()
-                #traceback.print_exception(*einfo)
+                einfo = sys.exc_info()
+                traceback.print_exception(*einfo)

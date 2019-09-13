@@ -7,3 +7,5 @@ There is much tension between some of the people involved with the development o
 Features a custom built emulator for a Linux-style terminal. Use classic Unix commands, as well as some of our own.
 
 Remember to follow the administrator's instructions, and if you ever get stuck, a log of your conversations will be saved in AILEE's filesystem.
+
+The original game was developed on repl.it, the linke is [Here](https://repl.it/@grantHaataja/AILEE)

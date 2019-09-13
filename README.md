@@ -8,4 +8,4 @@ Features a custom built emulator for a Linux-style terminal. Use classic Unix co
 
 Remember to follow the administrator's instructions, and if you ever get stuck, a log of your conversations will be saved in AILEE's filesystem.
 
-The original game was developed on repl.it, the linke is [Here](https://repl.it/@grantHaataja/AILEE).
+The original game was developed on repl.it, the link is [Here](https://repl.it/@grantHaataja/AILEE).
